@@ -2190,44 +2190,19 @@ class Admin extends CI_Controller {
 		$data['nama'] = $this->session->userdata('nama'); 
 		$data['username'] = $this->session->userdata('username'); 
 		$this->load->view('/admin/header', $data);
-		$jumlahdata = $this->master->page_satuanobat();
-		$this->load->library('pagination');
-		$config['base_url'] = base_url("admin/msatuanobat/");
-		$config['total_rows'] = $jumlahdata;
-		$config['per_page'] = 10;
-		$from = $this->uri->segment(3);
-		// $config['page_query_string'] = TRUE;
-		//$config['use_page_numbers'] = TRUE;
-		$config['query_string_segment'] = 'page';
-		$config['full_tag_open'] = '<div ><ul class="pagination">';
-		$config['full_tag_close'] = '</ul></div><!--pagination-->';
-		$config['first_link'] = '&laquo; First';
-		$config['first_tag_open'] = '<li class="prev page">';
-		$config['first_tag_close'] = '</li>';
-		$config['last_link'] = 'Last &raquo;';
-		$config['last_tag_open'] = '<li class="next page">';
-		$config['last_tag_close'] = '</li>';
-		$config['next_link'] = 'Next &rarr;';
-		$config['next_tag_open'] = '<li class="next page">';
-		$config['next_tag_close'] = '</li>';
-		$config['prev_link'] = '&larr; Previous';
-		$config['prev_tag_open'] = '<li class="prev page">';
-		$config['prev_tag_close'] = '</li>';
-		$config['cur_tag_open'] = '<li class="active"><a href="">';
-		$config['cur_tag_close'] = '</a></li>';
-		$config['num_tag_open'] = '<li class="page">';
-		$config['num_tag_close'] = '</li>';
-		$config['anchor_class'] = 'follow_link';
-		$this->pagination->initialize($config);	
-		$data['mobat'] = $this->master->data_satuanobat($config['per_page'],$from);
-		$data['jd'] = $jumlahdata;
-		if($from < 1){
-			$data['nomor'] = 1;
+		try{
+			$crud = new grocery_CRUD();
+
+			//$crud->set_theme('datatables');
+			$crud->set_table('tbl_satuanobat');
+			
+			$output = $crud->render();
+
+			$this->output($output);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
 		}
-		if($from > 1){
-			$data['nomor'] = $from+1;
-		}
-		$this->load->view('/admin/msatuanobat', $data);
 		$this->load->view('/admin/footer');
 	}
 	public function tambah_satuanobat(){
