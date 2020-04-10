@@ -2224,195 +2224,22 @@ class Admin extends CI_Controller {
 		$data['nama'] = $this->session->userdata('nama'); 
 		$data['username'] = $this->session->userdata('username'); 
 		$this->load->view('/admin/header', $data);
-		$jumlahdata = $this->master->page_suplier();
-		$this->load->library('pagination');
-		$config['base_url'] = base_url("admin/msuplier/");
-		$config['total_rows'] = $jumlahdata;
-		$config['per_page'] = 10;
-		$from = $this->uri->segment(3);
-		// $config['page_query_string'] = TRUE;
-		//$config['use_page_numbers'] = TRUE;
-		$config['query_string_segment'] = 'page';
-		$config['full_tag_open'] = '<div ><ul class="pagination">';
-		$config['full_tag_close'] = '</ul></div><!--pagination-->';
-		$config['first_link'] = '&laquo; First';
-		$config['first_tag_open'] = '<li class="prev page">';
-		$config['first_tag_close'] = '</li>';
-		$config['last_link'] = 'Last &raquo;';
-		$config['last_tag_open'] = '<li class="next page">';
-		$config['last_tag_close'] = '</li>';
-		$config['next_link'] = 'Next &rarr;';
-		$config['next_tag_open'] = '<li class="next page">';
-		$config['next_tag_close'] = '</li>';
-		$config['prev_link'] = '&larr; Previous';
-		$config['prev_tag_open'] = '<li class="prev page">';
-		$config['prev_tag_close'] = '</li>';
-		$config['cur_tag_open'] = '<li class="active"><a href="">';
-		$config['cur_tag_close'] = '</a></li>';
-		$config['num_tag_open'] = '<li class="page">';
-		$config['num_tag_close'] = '</li>';
-		$config['anchor_class'] = 'follow_link';
-		$this->pagination->initialize($config);	
-		$data['v'] = $this->master->data_suplier($config['per_page'],$from);
-		$data['jd'] = $jumlahdata;
-		if($from < 1){
-			$data['nomor'] = 1;
+		try{
+			$crud = new grocery_CRUD();
+
+			//$crud->set_theme('datatables');
+			$crud->set_table('tbl_suplier');
+
+			$output = $crud->render();
+
+			$this->output($output);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
 		}
-		if($from > 1){
-			$data['nomor'] = $from+1;
-		}
-		$this->load->view('/admin/msuplier', $data);
 		$this->load->view('/admin/footer');
 	}
-	public function tambah_suplier(){
-		$namasuplier = $this->input->post('namasuplier');
-		$alamatsuplier = $this->input->post('alamatsuplier');
-		$nohpsuplier = $this->input->post('nohpsuplier');
-		$data = array ('namasuplier' => $namasuplier,
-					  'alamatsuplier' => $alamatsuplier,
-					  'nohpsuplier' => $nohpsuplier);
-		$ekz = $this->master->tambah_data('tbl_suplier', $data);
-		if($ekz){
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Berhasil Menyimpan',
-				text: ' Suplier  ".$namasuplier." Berhasil Ditambahkan',
-				type: 'success',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/msuplier/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Berhasil Menambah Data Obat.');window.location.href='".base_url('/admin/mobat')."' </script>";
-		}
-		else{
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Gagal Menyimpan',
-				text: 'Gagal Menambahkan Data Suplier',
-				type: 'error',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/msuplier/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Gagal Menambah Data Obat.');window.location.href='".base_url('/admin/mobat')."' </script>";
-		}
-	}
-	public function edit_suplier($id_suplier)
-	{
-		if($id_suplier == ""){
-			echo "<script>window.location.href='".base_url('/admin/msuplier')."' </script>";
-		}
-		$data['namaklinik'] = $this->namaklinik;
-		$data['alamatklinik'] = $this->alamatklinik;
-		$data['nohpklinik'] = $this->nohpklinik; 
-		$data['judul'] = "Edit Suplier - ".$this->namaklinik."";
-		$data['nama'] = $this->session->userdata('nama'); 
-		$data['username'] = $this->session->userdata('username'); 
-		$this->load->view('/admin/header', $data);
-		$data['v'] = $this->master->lihat_data('tbl_suplier', 'id_suplier', $id_suplier); 
-		$this->load->view('/admin/edit_suplier', $data);
-		$this->load->view('/admin/footer');
-	}
-	public function simpan_suplier($id_suplier)
-	{
-		if($id_suplier == ""){
-			echo "<script>window.location.href='".base_url('/admin/msuplier')."' </script>";
-		}
-		$namasuplier = $this->input->post('namasuplier');
-		$alamatsuplier = $this->input->post('alamatsuplier');
-		$nohpsuplier = $this->input->post('nohpsuplier');
-		$data = array ('namasuplier' => $namasuplier,
-					  'alamatsuplier' => $alamatsuplier,
-					  'nohpsuplier' => $nohpsuplier);
-		$ekz = $this->master->simpan_data('tbl_suplier','id_suplier', $id_suplier, $data);
-		if($ekz){
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Berhasil Menyimpan',
-				text: 'Data Suplier ".$namasuplier." Berhasil Dirubah',
-				type: 'success',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/msuplier/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Berhasil Menyimpan Data Obat.');window.location.href='".base_url('/admin/mobat')."' </script>";
-		}
-		else{
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Gagal Menyimpan',
-				text: 'Gagal Menyimpan Data Perubahan Suplier',
-				type: 'error',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/msuplier/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Gagal Menyimpan Data Obat.');window.location.href='".base_url('/admin/mobat')."' </script>";
-		}
-	}
-	public function hapus_suplier($id_suplier){
-		if($id_suplier == ""){
-			echo "<script>window.location.href='".base_url('/admin/msuplier')."' </script>";
-		}
-		echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Berhasil Menghapus',
-				text: 'Suplier Berhasil Dihapus',
-				type: 'success',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/msuplier/')."';	
-			  } ,2100); 
-			 </script>"; 
-		$this->master->hapus_data('tbl_suplier', 'id_suplier', $id_suplier);
-		//redirect(base_url("/admin/mobat"));
-	}
-	//
-	//master jenis obat
+	
 	public function mjenisobat()
 	{
 		$data['namaklinik'] = $this->namaklinik;
@@ -2448,206 +2275,25 @@ class Admin extends CI_Controller {
 		$data['nama'] = $this->session->userdata('nama'); 
 		$data['username'] = $this->session->userdata('username'); 
 		$this->load->view('/admin/header', $data);
-		$jumlahdata = $this->master->page_bahanhabispakai();
-		$this->load->library('pagination');
-		$config['base_url'] = base_url("admin/mbahanhabispakai/");
-		$config['total_rows'] = $jumlahdata;
-		$config['per_page'] = 10;
-		$from = $this->uri->segment(3);
-		// $config['page_query_string'] = TRUE;
-		//$config['use_page_numbers'] = TRUE;
-		$config['query_string_segment'] = 'page';
-		$config['full_tag_open'] = '<div ><ul class="pagination">';
-		$config['full_tag_close'] = '</ul></div><!--pagination-->';
-		$config['first_link'] = '&laquo; First';
-		$config['first_tag_open'] = '<li class="prev page">';
-		$config['first_tag_close'] = '</li>';
-		$config['last_link'] = 'Last &raquo;';
-		$config['last_tag_open'] = '<li class="next page">';
-		$config['last_tag_close'] = '</li>';
-		$config['next_link'] = 'Next &rarr;';
-		$config['next_tag_open'] = '<li class="next page">';
-		$config['next_tag_close'] = '</li>';
-		$config['prev_link'] = '&larr; Previous';
-		$config['prev_tag_open'] = '<li class="prev page">';
-		$config['prev_tag_close'] = '</li>';
-		$config['cur_tag_open'] = '<li class="active"><a href="">';
-		$config['cur_tag_close'] = '</a></li>';
-		$config['num_tag_open'] = '<li class="page">';
-		$config['num_tag_close'] = '</li>';
-		$config['anchor_class'] = 'follow_link';
-		$this->pagination->initialize($config);	
-		$data['v'] = $this->master->data_bahanhabispakai($config['per_page'],$from);
-		$data['jd'] = $jumlahdata;
-		if($from < 1){
-			$data['nomor'] = 1;
+		try{
+			$crud = new grocery_CRUD();
+
+			//$crud->set_theme('datatables');
+			$crud->set_table('tbl_bahan_habis_pakai');
+			$crud->set_relation('id_jenisobat', 'tbl_jenisobat', 'jenisobat');
+			$crud->set_relation('id_satuanobat', 'tbl_satuanobat', 'satuanobat');
+			$crud->set_relation('id_suplier', 'tbl_suplier', 'namasuplier');
+			$crud->columns('nama_bahan','id_jenisobat', 'stok_bahan', 'id_satuanobat', 'harga_bahan','id_suplier');
+			$output = $crud->render();
+
+			$this->output($output);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
 		}
-		if($from > 1){
-			$data['nomor'] = $from+1;
-		}
-		$this->load->view('/admin/mbahanhabispakai', $data);
 		$this->load->view('/admin/footer');
 	}
-	public function tambah_bahanhabispakai(){
-		$nama_bahan = $this->input->post('nama_bahan');
-		$jenis_bahan = $this->input->post('jenis_bahan');
-		$stok_bahan = $this->input->post('stok_bahan');
-		$satuan_bahan = $this->input->post('satuan_bahan');
-		$harga_bahan = $this->input->post('harga_bahan');
-		$data = array (
-			'nama_bahan' => $nama_bahan,
-			'jenis_bahan' => $jenis_bahan,
-			'stok_bahan' => $stok_bahan,
-			'satuan_bahan' => $satuan_bahan,
-			'harga_bahan' => $harga_bahan,
-		);
-		$ekz = $this->master->tambah_data('tbl_bahan_habis_pakai', $data);
-		if($ekz){
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Berhasil Menyimpan',
-				text: 'Bahan Habis Pakai  ".$nama_bahan." Berhasil Ditambahkan',
-				type: 'success',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mbahanhabispakai/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Berhasil Menambah Data Obat.');window.location.href='".base_url('/admin/mobat')."' </script>";
-		}
-		else{
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Gagal Menyimpan',
-				text: 'Gagal Menambahkan Data Bahan Habis Pakai',
-				type: 'error',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mbahanhabispakai/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Gagal Menambah Data Obat.');window.location.href='".base_url('/admin/mobat')."' </script>";
-		}
-	}
-	public function edit_bahanhabispakai($id_bahan)
-	{
-		if($id_bahan == ""){
-			echo "<script>window.location.href='".base_url('/admin/mbahanhabispakai')."' </script>";
-		}
-		$data['namaklinik'] = $this->namaklinik;
-		$data['alamatklinik'] = $this->alamatklinik;
-		$data['nohpklinik'] = $this->nohpklinik; 
-		$data['judul'] = "Edit Bahan Habis Pakai - ".$this->namaklinik."";
-		$data['nama'] = $this->session->userdata('nama'); 
-		$data['username'] = $this->session->userdata('username'); 
-		$this->load->view('/admin/header', $data);
-		$data['v'] = $this->master->lihat_data('tbl_bahan_habis_pakai', 'id_bahan', $id_bahan); 
-		$this->load->view('/admin/edit_bahanhabispakai', $data);
-		$this->load->view('/admin/footer');
-	}
-	public function simpan_bahanhabispakai($id_bahan)
-	{
-		if($id_bahan == ""){
-			echo "<script>window.location.href='".base_url('/admin/mbahanhabispakai')."' </script>";
-		}
-		$nama_bahan = $this->input->post('nama_bahan');
-		$jenis_bahan = $this->input->post('jenis_bahan');
-		$stok_bahan = $this->input->post('stok_bahan');
-		$satuan_bahan = $this->input->post('satuan_bahan');
-		$harga_bahan = $this->input->post('harga_bahan');
-		$data = array (
-			'nama_bahan' => $nama_bahan,
-			'jenis_bahan' => $jenis_bahan,
-			'stok_bahan' => $stok_bahan,
-			'satuan_bahan' => $satuan_bahan,
-			'harga_bahan' => $harga_bahan,
-		);
-		$ekz = $this->master->simpan_data('tbl_bahan_habis_pakai','id_bahan', $id_bahan, $data);
-		if($ekz){
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Berhasil Menyimpan',
-				text: 'Data Bahan Habis Pakai ".$nama_bahan." Berhasil Dirubah',
-				type: 'success',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mbahanhabispakai/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Berhasil Menyimpan Data Obat.');window.location.href='".base_url('/admin/mobat')."' </script>";
-		}
-		else{
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Gagal Menyimpan',
-				text: 'Gagal Menyimpan Data Perubahan Bahan Habis Pakai',
-				type: 'error',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mbahanhabispakai/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Gagal Menyimpan Data Obat.');window.location.href='".base_url('/admin/mobat')."' </script>";
-		}
-	}
-	public function hapus_bahanhabispakai($id_bahan){
-		if($id_bahan == ""){
-			echo "<script>window.location.href='".base_url('/admin/mbahanhabispakai')."' </script>";
-		}
-		echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Berhasil Menghapus',
-				text: 'Bahan Habis Pakai Berhasil Dihapus',
-				type: 'success',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mbahanhabispakai/')."';	
-			  } ,2100); 
-			 </script>"; 
-		$this->master->hapus_data('tbl_bahan_habis_pakai', 'id_bahan', $id_bahan);
-		//redirect(base_url("/admin/mobat"));
-	}
-	//
+	
 	//master Tindakan
 	public function mtindakan()
 	{

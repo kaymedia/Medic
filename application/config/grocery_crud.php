@@ -32,7 +32,7 @@
     $config['grocery_crud_default_theme'] = 'tablestrap';
 
     // The environment is important so we can have specific configurations for specific environments
-    $config['grocery_crud_environment'] = 'production';
+    $config['grocery_crud_environment'] = 'development';
 
     // Turn XSS clean into true in case you are exposing your CRUD into public. Please be aware that this is
     // stripping all the HTML and do not just trim the extra javascript
