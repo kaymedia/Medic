@@ -33,6 +33,14 @@ class Admin extends CI_Controller {
 		}
 		
 	}
+	function encrypt_password($post_array, $primary_key = null)
+	{
+	  
+		$this->load->helper('security');
+		$post_array['password'] = do_hash($post_array['password'], 'md5');
+		return $post_array;
+	  
+	}
 	public function output($output = null)
 	{
 		$this->load->view('/admin/detail.php',(array)$output);
@@ -2760,201 +2768,22 @@ class Admin extends CI_Controller {
 		$data['nama'] = $this->session->userdata('nama'); 
 		$data['username'] = $this->session->userdata('username'); 
 		$this->load->view('/admin/header', $data);
-		$jumlahdata = $this->master->page_user();
-		$this->load->library('pagination');
-		$config['base_url'] = base_url("admin/user/");
-		$config['total_rows'] = $jumlahdata;
-		$config['per_page'] = 10;
-		$from = $this->uri->segment(3);
-		// $config['page_query_string'] = TRUE;
-		//$config['use_page_numbers'] = TRUE;
-		$config['query_string_segment'] = 'page';
-		$config['full_tag_open'] = '<div ><ul class="pagination">';
-		$config['full_tag_close'] = '</ul></div><!--pagination-->';
-		$config['first_link'] = '&laquo; First';
-		$config['first_tag_open'] = '<li class="prev page">';
-		$config['first_tag_close'] = '</li>';
-		$config['last_link'] = 'Last &raquo;';
-		$config['last_tag_open'] = '<li class="next page">';
-		$config['last_tag_close'] = '</li>';
-		$config['next_link'] = 'Next &rarr;';
-		$config['next_tag_open'] = '<li class="next page">';
-		$config['next_tag_close'] = '</li>';
-		$config['prev_link'] = '&larr; Previous';
-		$config['prev_tag_open'] = '<li class="prev page">';
-		$config['prev_tag_close'] = '</li>';
-		$config['cur_tag_open'] = '<li class="active"><a href="">';
-		$config['cur_tag_close'] = '</a></li>';
-		$config['num_tag_open'] = '<li class="page">';
-		$config['num_tag_close'] = '</li>';
-		$config['anchor_class'] = 'follow_link';
-		$this->pagination->initialize($config);	
-		$data['user'] = $this->master->data_user($config['per_page'],$from);
-		$data['jd'] = $jumlahdata;
-		if($from < 1){
-			$data['nomor'] = 1;
+		try{
+			$crud = new grocery_CRUD();
+			$crud->columns(['username','nama','alamat','nohp']);
+			//$crud->set_theme('datatables');
+			$crud->set_table('tbl_user');
+			$crud->callback_before_insert(array($this,'encrypt_password'));
+			$output = $crud->render();
+
+			$this->output($output);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
 		}
-		if($from > 1){
-			$data['nomor'] = $from+1;
-		}
-		$this->load->view('/admin/profile', $data);
 		$this->load->view('/admin/footer');
 	}
-	public function edit_user($id_user)
-	{
-		if($id_user == ""){
-			echo "<script>window.location.href='".base_url('/admin/user')."' </script>";
-		}
-		$data['namaklinik'] = $this->namaklinik;
-		$data['alamatklinik'] = $this->alamatklinik;
-		$data['nohpklinik'] = $this->nohpklinik; 
-		$data['judul'] = "Edit User - ".$this->namaklinik."";
-		$data['nama'] = $this->session->userdata('nama'); 
-		$data['username'] = $this->session->userdata('username'); 
-		$this->load->view('/admin/header', $data);
-		$data['user'] = $this->master->edit_user($id_user);
-		$this->load->view('/admin/edit_user', $data);
-		$this->load->view('/admin/footer');
-	}
-	public function tambah_user(){
-		$username = $this->input->post('username');
-		$password = md5($this->input->post('username'));
-		$nama = $this->input->post('nama');
-		$alamat = $this->input->post('alamat');
-		$nohp = $this->input->post('nohp');
-		$data = array('username' => $username,
-					  'password' => $password,
-					  'nama' => $nama,
-					  'alamat' => $alamat,
-					  'nohp' => $nohp);
-		$ekz = $this->master->tambah_user($data);
-		if($ekz){
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Berhasil Menyimpan',
-				text: 'Data User ".$nama." Berhasil Ditambahkan',
-				type: 'success',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/user/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Berhasil Menambah Data User.');window.location.href='".base_url('/admin/user')."' </script>";
-		}
-		else{
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Gagal Menyimpan',
-				text: 'Data User ".$nama." Tidak Berhasil Ditambahkan',
-				type: 'error',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/user/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Gagal Menambah Data User.');window.location.href='".base_url('/admin/user')."' </script>";
-		}
-	}
-	public function simpan_user($id_user){
-		if($id_user == ""){
-			echo "<script>window.location.href='".base_url('/admin/user')."' </script>";
-		}
-		$username = $this->input->post('username');
-		$password = md5($this->input->post('username'));
-		$nama = $this->input->post('nama');
-		$alamat = $this->input->post('alamat');
-		$nohp = $this->input->post('nohp');
-		$data = array('username' => $username,
-					  'password' => $password,
-					  'nama' => $nama,
-					  'alamat' => $alamat,
-					  'nohp' => $nohp);
-		$ekz = $this->master->simpan_user($data, $id_user);
-		if($ekz){
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Berhasil Menyimpan',
-				text: 'Data User ".$nama." Berhasil Dirubah',
-				type: 'success',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/user/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Berhasil Menyimpan Data User.');window.location.href='".base_url('/admin/user')."' </script>";
-		}
-		else{
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Gagal Menyimpan',
-				text: 'Data User ".$nama." Tidak Berhasil Dirubah',
-				type: 'error',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/user/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Gagal Menyimpan Data User.');window.location.href='".base_url('/admin/user')."' </script>";
-		}
-	}
-	public function hapus_user($id_user){
-		if($id_user == ""){
-			echo "<script>window.location.href='".base_url('/admin/user')."' </script>";
-		}
-		$this->master->hapus_user($id_user);
-		echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Berhasil Menghapus',
-				text: 'User Berhasil Dihapus',
-				type: 'success',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/user/')."';	
-			  } ,2100); 
-			 </script>"; 
-		
-		//redirect(base_url("/admin/user"));
-	}
+	
 	public function setting()
 	{
 		$data['namaklinik'] = $this->namaklinik;
