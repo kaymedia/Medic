@@ -14,6 +14,11 @@ class Admin extends CI_Controller {
 			// redirect(base_url());
 		// }
 		$this->load->library(array('PHPExcel','PHPExcel/IOFactory'));
+		
+		$this->load->database();
+		$this->load->helper('url');
+
+		$this->load->library('grocery_CRUD');
 		$this->load->helper('tglid'); //tanggalindonesia
 		$data['situs'] = $this->master->situs();
 		foreach($data['situs'] as $situs){
@@ -27,6 +32,10 @@ class Admin extends CI_Controller {
 			$this->limitkadaluarsa = $situs->limitkadaluarsa;
 		}
 		
+	}
+	public function output($output = null)
+	{
+		$this->load->view('/admin/detail.php',(array)$output);
 	}
 	public function index()
 	{
@@ -3226,246 +3235,22 @@ class Admin extends CI_Controller {
 		$data['nama'] = $this->session->userdata('nama'); 
 		$data['username'] = $this->session->userdata('username'); 
 		$this->load->view('/admin/header', $data);
-		$jumlahdata = $this->master->page_ruangan();
-		$this->load->library('pagination');
-		$config['base_url'] = base_url("admin/mruangan/");
-		$config['total_rows'] = $jumlahdata;
-		$config['per_page'] = 10;
-		$from = $this->uri->segment(3);
-		// $config['page_query_string'] = TRUE;
-		//$config['use_page_numbers'] = TRUE;
-		$config['query_string_segment'] = 'page';
-		$config['full_tag_open'] = '<div ><ul class="pagination">';
-		$config['full_tag_close'] = '</ul></div><!--pagination-->';
-		$config['first_link'] = '&laquo; First';
-		$config['first_tag_open'] = '<li class="prev page">';
-		$config['first_tag_close'] = '</li>';
-		$config['last_link'] = 'Last &raquo;';
-		$config['last_tag_open'] = '<li class="next page">';
-		$config['last_tag_close'] = '</li>';
-		$config['next_link'] = 'Next &rarr;';
-		$config['next_tag_open'] = '<li class="next page">';
-		$config['next_tag_close'] = '</li>';
-		$config['prev_link'] = '&larr; Previous';
-		$config['prev_tag_open'] = '<li class="prev page">';
-		$config['prev_tag_close'] = '</li>';
-		$config['cur_tag_open'] = '<li class="active"><a href="">';
-		$config['cur_tag_close'] = '</a></li>';
-		$config['num_tag_open'] = '<li class="page">';
-		$config['num_tag_close'] = '</li>';
-		$config['anchor_class'] = 'follow_link';
-		$this->pagination->initialize($config);	
-		$data['ruangan'] = $this->master->data_ruangan($config['per_page'],$from);
-		$data['jd'] = $jumlahdata;
-		if($from < 1){
-			$data['nomor'] = 1;
+		try{
+			$crud = new grocery_CRUD();
+
+			//$crud->set_theme('datatables');
+			$crud->set_table('tbl_ruangan');
+			
+			$output = $crud->render();
+
+			$this->output($output);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
 		}
-		if($from > 1){
-			$data['nomor'] = $from+1;
-		}
-		$this->load->view('/admin/mruangan', $data);
 		$this->load->view('/admin/footer');
 	}
-	public function tambah_ruangan(){
-		$namaruangan = $this->input->post('namaruangan');
-		$data = array ('namaruangan' => $this->input->post('namaruangan'));
-		$ekz = $this->master->tambah_ruangan($data);
-		if($ekz){
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Berhasil Menyimpan',
-				text: 'Ruangan ".$namaruangan." Berhasil Ditambahkan',
-				type: 'success',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mruangan/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Berhasil Menambah Data Ruangan.');window.location.href='".base_url('/admin/mruangan')."' </script>";
-		}
-		else{
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Gagal Menyimpan',
-				text: 'Data Ruangan Tidak Berhasil Ditambahkan',
-				type: 'error',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mjadwal/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Gagal Menambah Data Ruangan.');window.location.href='".base_url('/admin/mruangan')."' </script>";
-		}
-		
-	}
-	public function post_cari_ruangan(){
-		$cariz = $this->input->post('namaruangan');
-		$carixx = urldecode($cariz); //menghilangkan %20 atau spasi
-		$sesi['cariruangan'] = $carixx;
-		$this->session->set_userdata($sesi);
-		redirect(base_url("admin/cari_ruangan"));
-	}
-	public function cari_ruangan()
-	{
-		$cari = $this->session->userdata('cariruangan');
-		if($cari == ""){
-			echo "<script>window.location.href='".base_url('/admin/mruangan')."' </script>";
-		}
-		$data['namaklinik'] = $this->namaklinik;
-		$data['alamatklinik'] = $this->alamatklinik;
-		$data['nohpklinik'] = $this->nohpklinik; 
-		$data['judul'] = "Cari Ruangan - ".$this->namaklinik."";
-		$data['nama'] = $this->session->userdata('nama'); 
-		$data['username'] = $this->session->userdata('username'); 
-		$this->load->view('/admin/header', $data);
-		$jumlahdata = $this->master->page_cari_ruangan($cari);
-		$this->load->library('pagination');
-		$config['base_url'] = base_url("admin/cari_ruangan/");
-		$config['total_rows'] = $jumlahdata;
-		$config['per_page'] = 10;
-		$from = $this->uri->segment(3);
-		// $config['page_query_string'] = TRUE;
-		//$config['use_page_numbers'] = TRUE;
-		$config['query_string_segment'] = 'page';
-		$config['full_tag_open'] = '<div ><ul class="pagination">';
-		$config['full_tag_close'] = '</ul></div><!--pagination-->';
-		$config['first_link'] = '&laquo; First';
-		$config['first_tag_open'] = '<li class="prev page">';
-		$config['first_tag_close'] = '</li>';
-		$config['last_link'] = 'Last &raquo;';
-		$config['last_tag_open'] = '<li class="next page">';
-		$config['last_tag_close'] = '</li>';
-		$config['next_link'] = 'Next &rarr;';
-		$config['next_tag_open'] = '<li class="next page">';
-		$config['next_tag_close'] = '</li>';
-		$config['prev_link'] = '&larr; Previous';
-		$config['prev_tag_open'] = '<li class="prev page">';
-		$config['prev_tag_close'] = '</li>';
-		$config['cur_tag_open'] = '<li class="active"><a href="">';
-		$config['cur_tag_close'] = '</a></li>';
-		$config['num_tag_open'] = '<li class="page">';
-		$config['num_tag_close'] = '</li>';
-		$config['anchor_class'] = 'follow_link';
-		$this->pagination->initialize($config);	
-		$data['ruangan'] = $this->master->data_cari_ruangan($config['per_page'],$from, $cari);
-		$data['jd'] = $jumlahdata;
-		if($from < 1){
-			$data['nomor'] = 1;
-		}
-		if($from > 1){
-			$data['nomor'] = $from+1;
-		}
-		$this->load->view('/admin/cari_ruangan', $data);
-		$this->load->view('/admin/footer');
-	}
-	public function edit_ruangan($id_ruangan)
-	{
-		if($id_ruangan == ""){
-			echo "<script>window.location.href='".base_url('/admin/mruangan')."' </script>";
-		}
-		$data['namaklinik'] = $this->namaklinik;
-		$data['alamatklinik'] = $this->alamatklinik;
-		$data['nohpklinik'] = $this->nohpklinik; 
-		$data['judul'] = "Master Ruangan - ".$this->namaklinik."";
-		$data['nama'] = $this->session->userdata('nama'); 
-		$data['username'] = $this->session->userdata('username'); 
-		$this->load->view('/admin/header', $data);
-		$data['ruangan'] = $this->master->edit_ruangan($id_ruangan); 
-		$this->load->view('/admin/edit_ruangan', $data);
-		$this->load->view('/admin/footer');
-	}
-	public function simpan_ruangan($id_ruangan){
-		if($id_ruangan == ""){
-			echo "<script>window.location.href='".base_url('/admin/mruangan')."' </script>";
-		}
-		$namaruangan = $this->input->post('namaruangan');
-		$data = array ('namaruangan' => $this->input->post('namaruangan'));
-		$ekz = $this->master->simpan_ruangan($data, $id_ruangan);
-		if($ekz){
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Berhasil Menyimpan',
-				text: 'Data Ruangan ".$namaruangan." Berhasil Dirubah',
-				type: 'success',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mruangan/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Berhasil Menyimapan Data Ruangan.');window.location.href='".base_url('/admin/mruangan')."' </script>";
-		}
-		else{
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Gagal Menyimpan',
-				text: 'Data Ruangan Tidak Berhasil Disimpan',
-				type: 'error',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mruangan/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Gagal Menyimapan Data Ruangan.');window.location.href='".base_url('/admin/mruangan')."' </script>";
-		}
-		
-	}
-	public function hapus_ruangan($id_ruangan){
-		if($id_ruangan == ""){
-			echo "<script>window.location.href='".base_url('/admin/mruangan')."' </script>";
-		}
-		$this->master->hapus_ruangan($id_ruangan);
-		echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Berhasil Menghapus',
-				text: 'Ruangan Berhasil Dihapus',
-				type: 'success',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mruangan/')."';	
-			  } ,2100); 
-			 </script>"; 
-		//redirect(base_url("/admin/mruangan"));
-	}
+	
 	public function user()
 	{
 		$data['namaklinik'] = $this->namaklinik;
