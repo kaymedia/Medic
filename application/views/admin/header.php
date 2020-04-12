@@ -55,7 +55,7 @@
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="<?php echo base_url("/admin"); ?>">Klinik Utama Saibumi</a>
+                <a class="navbar-brand" href="<?php echo base_url("/admin"); ?>"><?php echo $this->namaklinik; ?></a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -119,10 +119,11 @@
                         <i class="fa fa-bar-chart-o"><span>Master Obat</span> </i> 
 					</a>
                         <ul class="ml-menu">
-               <li><a href="<?php echo base_url()?>admin/mbahanhabispakai"><i class="fa fa-folder-open">Bahan Habis Pakai</i> </a></li>
+              
                 <li><a href="<?php echo base_url()?>admin/msatuanobat"><i class="fa fa-folder-open">Satuan Obat</i> </a></li>
                 <li><a href="<?php echo base_url()?>admin/mjenisobat"><i class="fa fa-folder-open">Jenis Obat</i> </a></li>
                 <li><a href="<?php echo base_url()?>admin/mobat"><i class="fa fa-folder-open">Obat</i> </a></li>
+                <li><a href="<?php echo base_url()?>admin/mbahanhabispakai"><i class="fa fa-folder-open">Bahan Habis Pakai</i> </a></li>
                 <li><a href="<?php echo base_url()?>admin/msuplier"><i class="fa fa-folder-open">Suplier Obat</i> </a></li>
 				<li><a href="<?php echo base_url()?>admin/bobat"><i class="fa fa-folder-open">Beli Obat</i> </a></li>
 
@@ -131,7 +132,7 @@
                 
 				<li>
                     <a href="javascript:void(0);" class="menu-toggle">
-                        <i class="fa fa-file"><span>Laporan</span> </i> 
+                        <i class="fa fa-print"><span>Laporan</span> </i> 
 					</a>
                         <ul class="ml-menu">
                 <li><a href="<?php echo base_url()?>admin/pendapatan"><i class="fa fa-file-pdf-o"> Pendapatan</i></a></li>
