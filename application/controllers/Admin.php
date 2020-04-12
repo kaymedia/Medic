@@ -157,214 +157,8 @@ class Admin extends CI_Controller {
 		$this->load->view('/admin/index');
 		$this->load->view('/admin/footer');
 	}
-	public function buat_jadwal($id_pasien)
-	{
-		if($id_pasien == ""){
-			echo "<script>window.location.href='".base_url('/admin/jadwal')."' </script>";
-		}
-		$data['namaklinik'] = $this->namaklinik;
-		$data['alamatklinik'] = $this->alamatklinik;
-		$data['nohpklinik'] = $this->nohpklinik; 
-		$data['judul'] = "Buat Jadwal Periksa - ".$this->namaklinik."";
-		$data['nama'] = $this->session->userdata('nama'); 
-		$data['username'] = $this->session->userdata('username'); 
-		$this->load->view('/admin/header', $data);
-		$data['pasien'] = $this->master->view_pasien_jadwal($id_pasien);
-		$this->load->view('/admin/buat_jadwal', $data);
-		$this->load->view('/admin/footer');
-	}
-	public function ubah_status_jadwal($id_jadwal)
-	{
-		if($id_jadwal == ""){
-			echo "<script>window.location.href='".base_url('/admin/mjadwal')."' </script>";
-		}
-		$data['id_jadwal'] = $id_jadwal;
-		$data['namaklinik'] = $this->namaklinik;
-		$data['alamatklinik'] = $this->alamatklinik;
-		$data['nohpklinik'] = $this->nohpklinik; 
-		$data['judul'] = "Ubah Status Jadwal Pemeriksaan - ".$this->namaklinik."";
-		$data['nama'] = $this->session->userdata('nama'); 
-		$data['username'] = $this->session->userdata('username'); 
-		$this->load->view('/admin/header', $data);
-		$data['pasien'] = $this->master->view_pasien_jadwal2($id_jadwal);
-		$this->load->view('/admin/ubah_status_jadwal', $data);
-		$this->load->view('/admin/footer');
-	}
-	public function edit_jadwal($id_pasien, $id_jadwal)
-	{
-		if($id_pasien == ""){
-			echo "<script>window.location.href='".base_url('/admin/mjadwal')."' </script>";
-		}
-		if($id_jadwal == ""){
-			echo "<script>window.location.href='".base_url('/admin/mjadwal')."' </script>";
-		}
-		$data['namaklinik'] = $this->namaklinik;
-		$data['id_jadwal'] = $id_jadwal;
-		$data['alamatklinik'] = $this->alamatklinik;
-		$data['nohpklinik'] = $this->nohpklinik; 
-		$data['judul'] = "Edit Jadwal Pemeriksaan - ".$this->namaklinik."";
-		$data['nama'] = $this->session->userdata('nama'); 
-		$data['username'] = $this->session->userdata('username'); 
-		$this->load->view('/admin/header', $data);
-		$data['pasien'] = $this->master->view_pasien_jadwal($id_pasien);
-		$this->load->view('/admin/edit_jadwal', $data);
-		$this->load->view('/admin/footer');
-	}
-	public function simpan_jadwal($id_jadwal)
-	{
 	
-		if($id_jadwal == ""){
-			echo "<script>window.location.href='".base_url('/admin/mjadwal')."' </script>";
-		}
-		$tanggal = $this->input->post('tanggal');
-		$data = array('tanggal' => $tanggal);
-		$ekz = $this->master->simpan_jadwal($data, $id_jadwal);
-		if($ekz){
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Berhasil Menyimpan',
-				text: 'Jadwal Telah Berhasil Dirubah ke tanggal ".tgl_indo($tanggal)."',
-				type: 'success',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mjadwal/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Berhasil Menyimpan Data Jadwal Pasien.');window.location.href='".base_url('/admin/mjadwal/')."' </script>";
-		}
-		else{
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Gagal Menyimpan',
-				text: 'Jadwal Tidak Berhasil Dirubah dan Tidak Tersimpan',
-				type: 'error',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mjadwal/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Gagal Menyimpan Data Jadwal Pasien.');window.location.href='".base_url('/admin/mjadwal')."' </script>";
-		}
-	}
-	public function simpan_status_jadwal($id_jadwal)
-	{
 	
-		if($id_jadwal == ""){
-			echo "<script>window.location.href='".base_url('/admin/mjadwal')."' </script>";
-		}
-		$status = $this->input->post('status');
-		$data = array('status' => $status);
-		$ekz = $this->master->simpan_jadwal($data, $id_jadwal);
-		if($ekz){
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Berhasil Menyimpan',
-				text: 'Status Jadwal Telah Berubah',
-				type: 'success',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mjadwal/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Berhasil Menubah Status Jadwal Pasien.');window.location.href='".base_url('/admin/mjadwal/')."' </script>";
-		}
-		else{
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Gagal Menyimpan',
-				text: 'Status Jadwal Tidak Tersimpan',
-				type: 'error',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mjadwal/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Gagal Menubah Status Jadwal Pasien.');window.location.href='".base_url('/admin/mjadwal')."' </script>";
-		}
-	}
-	public function tambah_jadwal($id_pasien){
-		if($id_pasien == ""){
-			echo "<script>window.location.href='".base_url('/admin/jadwal')."' </script>";
-		}
-		$tanggal = $this->input->post('tanggal');
-		$data = array('tanggal' => $tanggal,
-					  'id_pasien' => $id_pasien);
-		$ekz = $this->master->tambah_jadwal($data);
-		if($ekz){
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Berhasil Menyimpan',
-				text: 'Jadwal Baru Tanggal ".tgl_indo($tanggal)." Telah Berhasil Ditambahkan',
-				type: 'success',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mjadwal/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Berhasil Menambah Data Jadwal Pasien.');window.location.href='".base_url('/admin/mjadwal/')."' </script>";
-		}
-		else{
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Gagal Menyimpan',
-				text: 'Jadwal Tidak Berhasil Dibuat.',
-				type: 'error',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/jadwal/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Gagal Menambah Data Jadwal Pasien.');window.location.href='".base_url('/admin/jadwal')."' </script>";
-		}
-	}
 	public function periksa()
 	{
 		$data['namaklinik'] = $this->namaklinik;
@@ -1372,141 +1166,12 @@ class Admin extends CI_Controller {
 		$this->load->view('/admin/lap_pasien', $data);
 		$this->load->view('/admin/footer');
 	}
-	public function jadwal()
-	{
-		$data['namaklinik'] = $this->namaklinik;
-		$data['alamatklinik'] = $this->alamatklinik;
-		$data['nohpklinik'] = $this->nohpklinik; 
-		$data['judul'] = "Master Jadwal - ".$this->namaklinik."";
-		$data['nama'] = $this->session->userdata('nama'); 
-		$data['username'] = $this->session->userdata('username'); 
-		$this->load->view('/admin/header', $data);
-		$data['datapasien'] = $this->master->datapasien();
-		$this->load->view('/admin/jadwal', $data);
-		$this->load->view('/admin/footer');
-	}
-	public function post_cari_jadwal(){
-		$cari = $this->input->post('cari');
-		// $carixx = urldecode($cariz); //menghilangkan %20 atau spasi
-		// $sesiobat['pilih_jadwal_pasien'] = $carixx;
-		// $this->session->set_userdata($sesiobat);
-		//redirect(base_url("admin/pilih_jadwal_pasien"));
-		redirect(base_url("admin/buat_jadwal/$cari"));
-	}
-	// public function pilih_jadwal_pasien()
-	// {
-		// $cari = $this->session->userdata('pilih_jadwal_pasien');
-		// if($cari == ""){
-			// echo "<script>window.location.href='".base_url('/admin/jadwal')."' </script>";
-		// }
-		// $data['namaklinik'] = $this->namaklinik;
-		// $data['alamatklinik'] = $this->alamatklinik;
-		// $data['nohpklinik'] = $this->nohpklinik; 
-		// $data['judul'] = "Pilih Pasien - ".$this->namaklinik."";
-		// $data['nama'] = $this->session->userdata('nama'); 
-		// $data['username'] = $this->session->userdata('username'); 
-		// $this->load->view('/admin/header', $data);
-		// $jumlahdata = $this->master->page_cari_jadwal($cari);
-		// $this->load->library('pagination');
-		// $config['base_url'] = base_url("admin/pilih_jadwal_pasien/");
-		// $config['total_rows'] = $jumlahdata;
-		// $config['per_page'] = 10;
-		// $from = $this->uri->segment(3);
-		//$config['page_query_string'] = TRUE;
-		// //$config['use_page_numbers'] = TRUE;
-		// $config['query_string_segment'] = 'page';
-		// $config['full_tag_open'] = '<div ><ul class="pagination">';
-		// $config['full_tag_close'] = '</ul></div><!--pagination-->';
-		// $config['first_link'] = '&laquo; First';
-		// $config['first_tag_open'] = '<li class="prev page">';
-		// $config['first_tag_close'] = '</li>';
-		// $config['last_link'] = 'Last &raquo;';
-		// $config['last_tag_open'] = '<li class="next page">';
-		// $config['last_tag_close'] = '</li>';
-		// $config['next_link'] = 'Next &rarr;';
-		// $config['next_tag_open'] = '<li class="next page">';
-		// $config['next_tag_close'] = '</li>';
-		// $config['prev_link'] = '&larr; Previous';
-		// $config['prev_tag_open'] = '<li class="prev page">';
-		// $config['prev_tag_close'] = '</li>';
-		// $config['cur_tag_open'] = '<li class="active"><a href="">';
-		// $config['cur_tag_close'] = '</a></li>';
-		// $config['num_tag_open'] = '<li class="page">';
-		// $config['num_tag_close'] = '</li>';
-		// $config['anchor_class'] = 'follow_link';
-		// $this->pagination->initialize($config);	
-		// $data['pasien'] = $this->master->data_cari_jadwal($config['per_page'],$from, $cari);
-		// $data['jd'] = $jumlahdata;
-		// if($from < 1){
-			// $data['nomor'] = 1;
-		// }
-		// if($from > 1){
-			// $data['nomor'] = $from+1;
-		// }
-		// $this->load->view('/admin/cari_jadwal', $data);
-		// $this->load->view('/admin/footer');
-	// }
+	
 	public function post_cari_periksa(){
 		$cari = $this->input->post('cari');
-		// $carixx = urldecode($cariz); //menghilangkan %20 atau spasi
-		// $sesiobat['pilih_periksa_pasien'] = $carixx;
-		// $this->session->set_userdata($sesiobat);
-		// redirect(base_url("admin/pilih_periksa_pasien"));
 		redirect(base_url("admin/pemeriksaan/$cari"));
 	}
-	// public function pilih_periksa_pasien()
-	// {
-		// $cari = $this->session->userdata('pilih_periksa_pasien');
-		// if($cari == ""){
-			// echo "<script>window.location.href='".base_url('/admin/jadwal')."' </script>";
-		// }
-		// $data['namaklinik'] = $this->namaklinik;
-		// $data['alamatklinik'] = $this->alamatklinik;
-		// $data['nohpklinik'] = $this->nohpklinik; 
-		// $data['judul'] = "Pilih Pasien - MEDIC.ID  ".$this->namaklinik."";
-		// $data['nama'] = $this->session->userdata('nama'); 
-		// $data['username'] = $this->session->userdata('username'); 
-		// $this->load->view('/admin/header', $data);
-		// $jumlahdata = $this->master->page_cari_jadwal($cari);
-		// $this->load->library('pagination');
-		// $config['base_url'] = base_url("admin/pilih_periksa_pasien/");
-		// $config['total_rows'] = $jumlahdata;
-		// $config['per_page'] = 10;
-		// $from = $this->uri->segment(3);
-		//$config['page_query_string'] = TRUE;
-		// //$config['use_page_numbers'] = TRUE;
-		// $config['query_string_segment'] = 'page';
-		// $config['full_tag_open'] = '<div ><ul class="pagination">';
-		// $config['full_tag_close'] = '</ul></div><!--pagination-->';
-		// $config['first_link'] = '&laquo; First';
-		// $config['first_tag_open'] = '<li class="prev page">';
-		// $config['first_tag_close'] = '</li>';
-		// $config['last_link'] = 'Last &raquo;';
-		// $config['last_tag_open'] = '<li class="next page">';
-		// $config['last_tag_close'] = '</li>';
-		// $config['next_link'] = 'Next &rarr;';
-		// $config['next_tag_open'] = '<li class="next page">';
-		// $config['next_tag_close'] = '</li>';
-		// $config['prev_link'] = '&larr; Previous';
-		// $config['prev_tag_open'] = '<li class="prev page">';
-		// $config['prev_tag_close'] = '</li>';
-		// $config['cur_tag_open'] = '<li class="active"><a href="">';
-		// $config['cur_tag_close'] = '</a></li>';
-		// $config['num_tag_open'] = '<li class="page">';
-		// $config['num_tag_close'] = '</li>';
-		// $config['anchor_class'] = 'follow_link';
-		// $this->pagination->initialize($config);	
-		// $data['pasien'] = $this->master->data_cari_jadwal($config['per_page'],$from, $cari);
-		// $data['jd'] = $jumlahdata;
-		// if($from < 1){
-			// $data['nomor'] = 1;
-		// }
-		// if($from > 1){
-			// $data['nomor'] = $from+1;
-		// }
-		// $this->load->view('/admin/cari_periksa', $data);
-		// $this->load->view('/admin/footer');
-	// }
+	
 	public function mjadwal()
 	{
 		$data['namaklinik'] = $this->namaklinik;
@@ -1516,44 +1181,22 @@ class Admin extends CI_Controller {
 		$data['nama'] = $this->session->userdata('nama'); 
 		$data['username'] = $this->session->userdata('username'); 
 		$this->load->view('/admin/header', $data);
-		$jumlahdata = $this->master->page_mjadwal();
-		$this->load->library('pagination');
-		$config['base_url'] = base_url("admin/mjadwal/");
-		$config['total_rows'] = $jumlahdata;
-		$config['per_page'] = 10;
-		$from = $this->uri->segment(3);
-		// $config['page_query_string'] = TRUE;
-		//$config['use_page_numbers'] = TRUE;
-		$config['query_string_segment'] = 'page';
-		$config['full_tag_open'] = '<div ><ul class="pagination">';
-		$config['full_tag_close'] = '</ul></div><!--pagination-->';
-		$config['first_link'] = '&laquo; First';
-		$config['first_tag_open'] = '<li class="prev page">';
-		$config['first_tag_close'] = '</li>';
-		$config['last_link'] = 'Last &raquo;';
-		$config['last_tag_open'] = '<li class="next page">';
-		$config['last_tag_close'] = '</li>';
-		$config['next_link'] = 'Next &rarr;';
-		$config['next_tag_open'] = '<li class="next page">';
-		$config['next_tag_close'] = '</li>';
-		$config['prev_link'] = '&larr; Previous';
-		$config['prev_tag_open'] = '<li class="prev page">';
-		$config['prev_tag_close'] = '</li>';
-		$config['cur_tag_open'] = '<li class="active"><a href="">';
-		$config['cur_tag_close'] = '</a></li>';
-		$config['num_tag_open'] = '<li class="page">';
-		$config['num_tag_close'] = '</li>';
-		$config['anchor_class'] = 'follow_link';
-		$this->pagination->initialize($config);	
-		$data['mjadwal'] = $this->master->data_mjadwal($config['per_page'],$from);
-		$data['jd'] = $jumlahdata;
-		if($from < 1){
-			$data['nomor'] = 1;
+		try{
+			$crud = new grocery_CRUD();
+
+			//$crud->set_theme('datatables');
+			$crud->set_table('tbl_jadwal');
+			$crud->set_relation('id_pasien', 'tbl_pasien', '[{nomorkartu}] {namapasien} - {namaortu}');
+			$crud->columns('id_pasien', 'tanggal', 'status');
+			$crud->field_type('status','dropdown',
+            array('Sudah Periksa' => 'Sudah Periksa', 'Belum Periksa' => 'Belum Periksa'));
+			$output = $crud->render();
+
+			$this->output($output);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
 		}
-		if($from > 1){
-			$data['nomor'] = $from+1;
-		}
-		$this->load->view('/admin/mjadwal', $data);
 		$this->load->view('/admin/footer');
 	}
 	public function mpasien()

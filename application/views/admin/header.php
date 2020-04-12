@@ -100,7 +100,6 @@
                         </a>
                     </li>
 				<li><a href="<?php echo base_url()?>admin/daftar"><i class="fa fa-pencil-square"> <span>Pendaftaran</span></i></a></li>
-				<li><a href="<?php echo base_url()?>admin/jadwal"><i class="fa fa-calendar"><span>Buat Jadwal</span></i> </a></li>
 				<li><a href="<?php echo base_url()?>admin/periksa "><i class="fa fa-check-square-o"><span>Pemeriksaan</span></i> </a></li>
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
