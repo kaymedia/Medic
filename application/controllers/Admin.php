@@ -1993,201 +1993,25 @@ class Admin extends CI_Controller {
 		$data['nama'] = $this->session->userdata('nama'); 
 		$data['username'] = $this->session->userdata('username'); 
 		$this->load->view('/admin/header', $data);
-		$jumlahdata = $this->master->page_obat();
-		$this->load->library('pagination');
-		$config['base_url'] = base_url("admin/mobat/");
-		$config['total_rows'] = $jumlahdata;
-		$config['per_page'] = 10;
-		$from = $this->uri->segment(3);
-		// $config['page_query_string'] = TRUE;
-		//$config['use_page_numbers'] = TRUE;
-		$config['query_string_segment'] = 'page';
-		$config['full_tag_open'] = '<div ><ul class="pagination">';
-		$config['full_tag_close'] = '</ul></div><!--pagination-->';
-		$config['first_link'] = '&laquo; First';
-		$config['first_tag_open'] = '<li class="prev page">';
-		$config['first_tag_close'] = '</li>';
-		$config['last_link'] = 'Last &raquo;';
-		$config['last_tag_open'] = '<li class="next page">';
-		$config['last_tag_close'] = '</li>';
-		$config['next_link'] = 'Next &rarr;';
-		$config['next_tag_open'] = '<li class="next page">';
-		$config['next_tag_close'] = '</li>';
-		$config['prev_link'] = '&larr; Previous';
-		$config['prev_tag_open'] = '<li class="prev page">';
-		$config['prev_tag_close'] = '</li>';
-		$config['cur_tag_open'] = '<li class="active"><a href="">';
-		$config['cur_tag_close'] = '</a></li>';
-		$config['num_tag_open'] = '<li class="page">';
-		$config['num_tag_close'] = '</li>';
-		$config['anchor_class'] = 'follow_link';
-		$this->pagination->initialize($config);	
-		$data['mobat'] = $this->master->data_obat($config['per_page'],$from);
-		$data['jd'] = $jumlahdata;
-		if($from < 1){
-			$data['nomor'] = 1;
+		try{
+			$crud = new grocery_CRUD();
+
+			//$crud->set_theme('datatables');
+			$crud->set_table('tbl_obat');
+			$crud->set_relation('id_jenisobat', 'tbl_jenisobat', 'jenisobat');
+			$crud->set_relation('id_satuanobat', 'tbl_satuanobat', 'satuanobat');
+			$crud->set_relation('id_suplier', 'tbl_suplier', 'namasuplier');
+			$crud->columns('namaobat','id_jenisobat', 'stok', 'id_satuanobat', 'hargaobat','id_suplier');
+			$output = $crud->render();
+
+			$this->output($output);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
 		}
-		if($from > 1){
-			$data['nomor'] = $from+1;
-		}
-		$this->load->view('/admin/mobat', $data);
 		$this->load->view('/admin/footer');
 	}
-	public function tambah_obat(){
-		$namaobat = $this->input->post('namaobat');
-		$satuanobat = $this->input->post('satuan');
-		$hargaobat = $this->input->post('hargaobat');
-		$kadaluarsa = $this->input->post('kadaluarsa');
-		$stok = $this->input->post('stok');
-		$data = array ('namaobat' => $namaobat,
-					   'satuanobat' => $satuanobat,
-					   'hargaobat' => $hargaobat,
-					   'kadaluarsa' => $kadaluarsa,
-					   'stok' => $stok);
-		$ekz = $this->master->tambah_obat($data);
-		if($ekz){
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Berhasil Menyimpan',
-				text: ' Obat ".$namaobat." Berhasil Ditambahkan',
-				type: 'success',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mobat/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Berhasil Menambah Data Obat.');window.location.href='".base_url('/admin/mobat')."' </script>";
-		}
-		else{
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Gagal Menyimpan',
-				text: 'Gagal Menambahkan Data Obat',
-				type: 'error',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mobat/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Gagal Menambah Data Obat.');window.location.href='".base_url('/admin/mobat')."' </script>";
-		}
-	}
-	public function edit_obat($id_obat)
-	{
-		if($id_obat == ""){
-			echo "<script>window.location.href='".base_url('/admin/mobat')."' </script>";
-		}
-		$data['namaklinik'] = $this->namaklinik;
-		$data['alamatklinik'] = $this->alamatklinik;
-		$data['nohpklinik'] = $this->nohpklinik; 
-		$data['judul'] = "Edit Obat - ".$this->namaklinik."";
-		$data['nama'] = $this->session->userdata('nama'); 
-		$data['username'] = $this->session->userdata('username'); 
-		$this->load->view('/admin/header', $data);
-		$data['mobat'] = $this->master->edit_obat($id_obat); 
-		$this->load->view('/admin/edit_obat', $data);
-		$this->load->view('/admin/footer');
-	}
-	public function simpan_obat($id_obat)
-	{
-		if($id_obat == ""){
-			echo "<script>window.location.href='".base_url('/admin/mobat')."' </script>";
-		}
-		$namaobat = $this->input->post('namaobat');
-		$satuanobat = $this->input->post('satuan');
-		$hargaobat = $this->input->post('hargaobat');
-		$kadaluarsa = $this->input->post('kadaluarsa');
-		$stok = $this->input->post('stok');
-		$data = array ('namaobat' => $namaobat,
-					   'satuanobat' => $satuanobat,
-					   'hargaobat' => $hargaobat,
-					   'kadaluarsa' => $kadaluarsa,
-					   'stok' => $stok);
-		$ekz = $this->master->simpan_obat($data, $id_obat);
-		if($ekz){
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Berhasil Menyimpan',
-				text: 'Data Obat ".$namaobat." Berhasil Dirubah',
-				type: 'success',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mobat/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Berhasil Menyimpan Data Obat.');window.location.href='".base_url('/admin/mobat')."' </script>";
-		}
-		else{
-			echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Gagal Menyimpan',
-				text: 'Gagal Menyimpan Data Perubahan Obat',
-				type: 'error',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mobat/')."';	
-			  } ,2100); 
-			 </script>"; 
-			//echo "<script>alert('Gagal Menyimpan Data Obat.');window.location.href='".base_url('/admin/mobat')."' </script>";
-		}
-	}
-	public function hapus_obat($id_obat){
-		if($id_obat == ""){
-			echo "<script>window.location.href='".base_url('/admin/mobat')."' </script>";
-		}
-		echo "
-			<link href='".base_url()."/assets/sweetalert/sweetalert.css' rel='stylesheet' />
-			<script src='".base_url()."/assets/bsb/plugins/jquery/jquery.min.js'></script>
-			<script src='".base_url()."/assets/sweetalert/sweetalert.min.js'></script>
-			 <script type='text/javascript'>
-			  setTimeout(function () {  
-			   swal({
-				title: 'Berhasil Menghapus',
-				text: 'Obat Berhasil Dihapus',
-				type: 'success',
-				timer: 4000,
-				showConfirmButton: false
-			   });  
-			  },10); 
-			  window.setTimeout(function(){ 
-			  window.location.href='".base_url('/admin/mobat/')."';	
-			  } ,2100); 
-			 </script>"; 
-		$this->master->hapus_obat($id_obat);
-		//redirect(base_url("/admin/mobat"));
-	}
+	
 	//satuan obat
 	public function msatuanobat()
 	{
@@ -2320,66 +2144,7 @@ class Admin extends CI_Controller {
 		$this->load->view('/admin/footer');
 	}
 	
-	public function post_cari_obat(){
-		$cariz = $this->input->post('namaobat');
-		$carixx = urldecode($cariz); //menghilangkan %20 atau spasi
-		$sesiobat['cariobat'] = $carixx;
-		$this->session->set_userdata($sesiobat);
-		redirect(base_url("admin/cari_obat"));
-	}
-	public function cari_obat()
-	{
-		$cari = $this->session->userdata('cariobat');
-		if($cari == ""){
-			echo "<script>window.location.href='".base_url('/admin/mobat')."' </script>";
-		}
-		$data['namaklinik'] = $this->namaklinik;
-		$data['alamatklinik'] = $this->alamatklinik;
-		$data['nohpklinik'] = $this->nohpklinik; 
-		$data['judul'] = "Cari Ruangan - ".$this->namaklinik."";
-		$data['nama'] = $this->session->userdata('nama'); 
-		$data['username'] = $this->session->userdata('username'); 
-		$this->load->view('/admin/header', $data);
-		$jumlahdata = $this->master->page_cari_obat($cari);
-		$this->load->library('pagination');
-		$config['base_url'] = base_url("admin/cari_obat/");
-		$config['total_rows'] = $jumlahdata;
-		$config['per_page'] = 10;
-		$from = $this->uri->segment(3);
-		// $config['page_query_string'] = TRUE;
-		//$config['use_page_numbers'] = TRUE;
-		$config['query_string_segment'] = 'page';
-		$config['full_tag_open'] = '<div ><ul class="pagination">';
-		$config['full_tag_close'] = '</ul></div><!--pagination-->';
-		$config['first_link'] = '&laquo; First';
-		$config['first_tag_open'] = '<li class="prev page">';
-		$config['first_tag_close'] = '</li>';
-		$config['last_link'] = 'Last &raquo;';
-		$config['last_tag_open'] = '<li class="next page">';
-		$config['last_tag_close'] = '</li>';
-		$config['next_link'] = 'Next &rarr;';
-		$config['next_tag_open'] = '<li class="next page">';
-		$config['next_tag_close'] = '</li>';
-		$config['prev_link'] = '&larr; Previous';
-		$config['prev_tag_open'] = '<li class="prev page">';
-		$config['prev_tag_close'] = '</li>';
-		$config['cur_tag_open'] = '<li class="active"><a href="">';
-		$config['cur_tag_close'] = '</a></li>';
-		$config['num_tag_open'] = '<li class="page">';
-		$config['num_tag_close'] = '</li>';
-		$config['anchor_class'] = 'follow_link';
-		$this->pagination->initialize($config);	
-		$data['mobat'] = $this->master->data_cari_obat($config['per_page'],$from, $cari);
-		$data['jd'] = $jumlahdata;
-		if($from < 1){
-			$data['nomor'] = 1;
-		}
-		if($from > 1){
-			$data['nomor'] = $from+1;
-		}
-		$this->load->view('/admin/cari_obat', $data);
-		$this->load->view('/admin/footer');
-	}
+	
 	public function mruangan()
 	{
 		$data['namaklinik'] = $this->namaklinik;
