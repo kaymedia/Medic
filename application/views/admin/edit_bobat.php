@@ -21,6 +21,18 @@
                                     </div>
 									<div class="form-group">
 								  <div class="form-line">
+										<label>Jenis Obat</label>
+                                        <select name="id_jenisobat" class="form-control">
+                                        <?php foreach($jenisobat as $jenisobat){ ?> 
+                                          <option value="<?php echo $jenisobat->id_jenisobat; ?>"><?php echo $jenisobat->jenisobat; ?></option>
+                                        <?php } ?>
+											
+										
+										</select>
+                                    </div>
+                                    </div>
+									<div class="form-group">
+								  <div class="form-line">
 										<label>Jumlah Beli</label>
                                         <input name="jumlahbeli" type="number" class="form-control" value="<?php echo $bv->jumlahbeli; ?>" REQUIRED>
                                     </div>
@@ -60,10 +72,16 @@
 									</div>
 								  </div><!-- /.form-group -->
 								  </div><!-- /.form-group -->
-								<div class="form-group">
+								  <div class="form-group">
 								  <div class="form-line">
-										<label>Nama Apotik</label>
-                                        <input name="namaapotik" type="text" class="form-control" value="<?php echo $bv->namaapotik; ?>" REQUIRED>
+										<label>Nama Suplier</label>
+                                        <select name="id_suplier" class="form-control">
+                                        <?php foreach($suplier as $suplier){ ?> 
+                                          <option value="<?php echo $suplier->id_suplier; ?>"><?php echo $suplier->namasuplier; ?></option>
+                                        <?php } ?>
+											
+										
+										</select>
                                     </div>
                                     </div>
 									<div class="form-group">
@@ -79,14 +97,13 @@
 								  </div><!-- /.form-group -->
 								  <div class="form-group">
 								  <div class="form-line">
-										<label>Satuan Dalam Obat</label>
-                                        <select name="satuanobat" class="form-control">
-											<option value="<?php echo $bv->satuanobat; ?>"><?php echo $bv->satuanobat; ?></option>
-											<option value="Botol">Botol</option>
-											<option value="Tablet"> Tablet</option> 
-											<option value="Kapsul"> Kapsul</option>
-											<option value="Tube"> Tube</option>
-											<option value="Ampul"> Ampul</option>
+										<label>Satuan</label>
+                                        <select name="id_satuanobat" class="form-control">
+                                        <?php foreach($satuanobat as $satuanobat){ ?> 
+                                          <option value="<?php echo $satuanobat->id_satuanobat; ?>"><?php echo $satuanobat->satuanobat; ?></option>
+                                        <?php } ?>
+											
+										
 										</select>
                                     </div>
                                     </div>

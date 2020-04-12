@@ -19,11 +19,12 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Obat</th>
+                                            <th>Jenis Obat</th>
                                             <th>Jumlah Beli</th>
                                             <th>Satuan</th>
                                             <th>Jml/Stuan</th>
                                             <th>Harga Beli</th>
-                                            <th>Nama Apotik</th>
+                                            <th>Nama Suplier</th>
 											<th>Tanggal Beli</th>
 											<th></th>
                                             <th>Aksi</th>
@@ -34,11 +35,12 @@
 									     <tr>
                                             <td><?php echo $no; ?></td>
                                             <td><?php echo $bv->namaobat; ?></td>
+                                            <td><?php echo $bv->jenisobat; ?></td>
                                             <td><?php echo $bv->jumlahbeli; ?></td>
-                                            <td><?php echo $bv->satuan; ?></td>
+                                            <td><?php echo $bv->satuanobat; ?></td>
                                             <td><?php echo $bv->jumlahpersatuan; ?></td>
                                             <td>Rp.<?php echo number_format($bv->hargabeli,0,".","."). ''; ?></td>
-											<td><?php echo $bv->namaapotik; ?></td>
+											<td><?php echo $bv->namasuplier; ?></td>
 											<td><?php echo tgl_indo($bv->tanggalbeli); ?> </td>
 											<td></td><td><a href="<?php echo base_url("/admin/edit_bobat/$bv->id_beliobat");?>"><button class="btn btn-primary">Edit</button></a> <a href="<?php echo base_url("/admin/hapus_bobat/$bv->id_beliobat/$bv->id_obat"); ?>"><button onclick="javascript : return confirm('Apakah Anda Yakin Ingin Menghapus ?')" class="btn btn-danger">Hapus</button></a></td>
                                         </tr>
@@ -72,6 +74,18 @@
                                         <input name="namaobat" type="text" class="form-control" placeholder="Nama Obat" REQUIRED>
                                     </div>
 									</div>
+                  <div class="form-group">
+								  <div class="form-line">
+										<label>Jenis Obat</label>
+                                        <select name="id_jenisobat" class="form-control">
+                                        <?php foreach($jenisobat as $jenisobat){ ?> 
+                                          <option value="<?php echo $jenisobat->id_jenisobat; ?>"><?php echo $jenisobat->jenisobat; ?></option>
+                                        <?php } ?>
+											
+										
+										</select>
+                                    </div>
+                                    </div>
 									<div class="form-group">
 									<div class="form-line">
 										<label>Jumlah Beli</label>
@@ -79,7 +93,7 @@
                                     </div>
 									</div>
                                     
-									<div class="form-group">
+                  <div class="form-group">
 								  <div class="form-line">
 										<label>Satuan</label>
                                         <select name="satuan" class="form-control">
@@ -91,6 +105,7 @@
 										</select>
                                     </div>
                                     </div>
+									
 									<div class="form-group">
 								  <div class="form-line">
 										<label>Jumlah per Satuan</label>
@@ -114,12 +129,18 @@
 									</div>
 								  </div><!-- /.form-group -->
 								  </div><!-- /.form-group -->
-									<div class="form-group">
-									<div class="form-line">
-										<label>Nama Apotik</label>
-                                        <input name="namaapotik" type="text" class="form-control" placeholder="Nama Apotik" REQUIRED>
+                  <div class="form-group">
+								  <div class="form-line">
+										<label>Nama Suplier</label>
+                                        <select name="id_suplier" class="form-control">
+                                        <?php foreach($suplier as $suplier){ ?> 
+                                          <option value="<?php echo $suplier->id_suplier; ?>"><?php echo $suplier->namasuplier; ?></option>
+                                        <?php } ?>
+											
+										
+										</select>
                                     </div>
-									</div>
+                                    </div>
                                     
 									<div class="form-group">
 								  <div class="form-line">
@@ -133,15 +154,15 @@
 								  </div><!-- /.form-group -->
 								  </div><!-- /.form-group -->
 								  
-								<div class="form-group">
+                  <div class="form-group">
 								  <div class="form-line">
-										<label>Satuan Dalam Obat</label>
-                                        <select name="satuanobat" class="form-control">
-											<option value="Botol">Botol</option>
-											<option value="Tablet"> Tablet</option> 
-											<option value="Kapsul"> Kapsul</option>
-											<option value="Tube"> Tube</option>
-											<option value="Ampul"> Ampul</option>
+										<label>Satuan</label>
+                                        <select name="id_satuanobat" class="form-control">
+                                        <?php foreach($satuanobat as $satuanobat){ ?> 
+                                          <option value="<?php echo $satuanobat->id_satuanobat; ?>"><?php echo $satuanobat->satuanobat; ?></option>
+                                        <?php } ?>
+											
+										
 										</select>
                                     </div>
                                     </div>

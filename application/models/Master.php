@@ -166,7 +166,7 @@ class Master extends CI_Model{
 		else{
 			$sampai = $from = $this->uri->segment(3);
 		}
-        $query =$this->db->query("SELECT * FROM `tbl_beliobat` order by id_beliobat DESC LIMIT $sampai, $dari ");
+        $query =$this->db->query("SELECT * FROM `tbl_beliobat`, tbl_satuanobat, tbl_jenisobat, tbl_suplier where tbl_beliobat.id_jenisobat = tbl_jenisobat.id_jenisobat and tbl_beliobat.id_satuanobat = tbl_satuanobat.id_satuanobat and tbl_beliobat.id_suplier = tbl_suplier.id_suplier order by id_beliobat DESC LIMIT $sampai, $dari ");
         return $query->result();	
 	}
 	public function edit_bobat($id_beliobat) {

@@ -2423,6 +2423,9 @@ class Admin extends CI_Controller {
 		if($from > 1){
 			$data['nomor'] = $from+1;
 		}
+		$data['jenisobat'] = $this->master->lihat_data('tbl_jenisobat', '1', '1');
+		$data['satuanobat'] = $this->master->lihat_data('tbl_satuanobat', '1', '1');
+		$data['suplier'] = $this->master->lihat_data('tbl_suplier', '1', '1');
 		$this->load->view('/admin/bobat', $data);
 		$this->load->view('/admin/footer');
 	}
@@ -2433,13 +2436,14 @@ class Admin extends CI_Controller {
 		$jumlahpersatuan = $this->input->post('jumlahpersatuan');
 		$hargabeli = $this->input->post('hargabeli');
 		$kadaluarsa = $this->input->post('kadaluarsa');
-		$namaapotik = $this->input->post('namaapotik');
+		$id_suplier = $this->input->post('id_suplier');
 		$tanggalbeli = $this->input->post('tanggalbeli');
-		$satuanobat = $this->input->post('satuanobat');
+		$id_satuanobat = $this->input->post('id_satuanobat');
+		$id_jenisobat = $this->input->post('id_jenisobat');
 		//
 		
 		$stok = $jumlahbeli * $jumlahpersatuan;
-		$hargaasli = $hargabeli / $jumlahpersatuan; 
+		$hargaasli = $hargabeli / $stok; 
 		$hargauntung = $hargaasli * $this->pendapatan_obat / 100;
 		
 		$hargaobat = $hargaasli + $hargauntung;
@@ -2447,7 +2451,9 @@ class Admin extends CI_Controller {
 
 		//dataobat
 		$dataobat = array ('namaobat' => $namaobat,
-					   'satuanobat' => $satuanobat,
+					   'id_satuanobat' => $id_satuanobat,
+					   'id_jenisobat' => $id_jenisobat,
+					   'id_suplier' => $id_jenisobat,
 					   'hargaobat' => $hargaobat,
 					   'kadaluarsa' => $kadaluarsa,
 					   'stok' => $stok);
@@ -2459,12 +2465,13 @@ class Admin extends CI_Controller {
 		$data = array ('namaobat' => $namaobat,
 						'id_obat' => $id_obat,
 						'jumlahbeli' => $jumlahbeli,
+						'id_jenisobat' => $id_jenisobat,
 					   'satuan' => $satuan,
 					   'jumlahpersatuan' => $jumlahpersatuan,
 					   'hargabeli' => $hargabeli,
 					   'kadaluarsa' => $kadaluarsa,
-					   'namaapotik' => $namaapotik,
-					   'satuanobat' => $satuanobat,
+					   'id_suplier' => $id_suplier,
+					   'id_satuanobat' => $id_satuanobat,
 					   'tanggalbeli' => $tanggalbeli);
 		$ekz = $this->master->tambah_bobat($data);
 		if($ekz){
@@ -2523,6 +2530,9 @@ class Admin extends CI_Controller {
 		$data['username'] = $this->session->userdata('username'); 
 		$this->load->view('/admin/header', $data);
 		$data['bobat'] = $this->master->edit_bobat($id_beliobat); 
+		$data['jenisobat'] = $this->master->lihat_data('tbl_jenisobat', '1', '1');
+		$data['satuanobat'] = $this->master->lihat_data('tbl_satuanobat', '1', '1');
+		$data['suplier'] = $this->master->lihat_data('tbl_suplier', '1', '1');
 		$this->load->view('/admin/edit_bobat', $data);
 		$this->load->view('/admin/footer');
 	}
@@ -2533,21 +2543,24 @@ class Admin extends CI_Controller {
 		$jumlahpersatuan = $this->input->post('jumlahpersatuan');
 		$hargabeli = $this->input->post('hargabeli');
 		$kadaluarsa = $this->input->post('kadaluarsa');
-		$namaapotik = $this->input->post('namaapotik');
+		$id_suplier = $this->input->post('id_suplier');
 		$tanggalbeli = $this->input->post('tanggalbeli');
-		$satuanobat = $this->input->post('satuanobat');
+		$id_satuanobat = $this->input->post('id_satuanobat');
+		$id_jenisobat = $this->input->post('id_jenisobat');
 		//
 		
 		$stok = $jumlahbeli * $jumlahpersatuan;
-		$hargaasli = $hargabeli / $jumlahpersatuan; 
-		$hargauntung = $hargaasli * 20 / 100;
+		$hargaasli = $hargabeli / $stok; 
+		$hargauntung = $hargaasli * $this->pendapatan_obat / 100;
 		
 		$hargaobat = $hargaasli + $hargauntung;
 		
 
 		//dataobat
 		$dataobat = array ('namaobat' => $namaobat,
-					   'satuanobat' => $satuanobat,
+					   'id_satuanobat' => $id_satuanobat,
+					   'id_jenisobat' => $id_jenisobat,
+					   'id_suplier' => $id_jenisobat,
 					   'hargaobat' => $hargaobat,
 					   'kadaluarsa' => $kadaluarsa,
 					   'stok' => $stok);
@@ -2558,12 +2571,13 @@ class Admin extends CI_Controller {
 		$data = array ('namaobat' => $namaobat,
 						'id_obat' => $id_obat,
 						'jumlahbeli' => $jumlahbeli,
+						'id_jenisobat' => $id_jenisobat,
 					   'satuan' => $satuan,
 					   'jumlahpersatuan' => $jumlahpersatuan,
 					   'hargabeli' => $hargabeli,
 					   'kadaluarsa' => $kadaluarsa,
-					   'namaapotik' => $namaapotik,
-					   'satuanobat' => $satuanobat,
+					   'id_suplier' => $id_suplier,
+					   'id_satuanobat' => $id_satuanobat,
 					   'tanggalbeli' => $tanggalbeli);
 		$ekz = $this->master->simpan_bobat($data, $id_beliobat);
 		if($ekz){
