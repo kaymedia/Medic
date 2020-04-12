@@ -23,8 +23,8 @@
 <body class="login-page">
     <div class="login-box">
         <div class="logo">
-            <a href="javascript:void(0);">Klinik Utama Saibumi</b></a>
-            <small> Aplikasi Manajemen Klinik</small>
+            <a href="javascript:void(0);">E-MEDIC</b></a>
+            <small> Aplikasi Manajemen Fasilitas Kesehatan</small>
         </div>
         <div class="card">
             <div class="body">
@@ -59,7 +59,7 @@
                         <div class="col-xs-6">
                            &copy; <?= date('Y'); ?>
                         </div>
-                        <div class="col-xs-6 align-right">Klinik Utama Saibumi</a>
+                        <div class="col-xs-6 align-right"></a>
                         </div>
                     </div>
                 </form>

@@ -1020,7 +1020,7 @@ class Admin extends CI_Controller {
 			  setTimeout(function () {  
 			   swal({
 				title: 'Logout Berhasil',
-				text: 'KLINIK UTAMA SAIBUMI',
+				text: 'E-MEDIC',
 				type: 'success',
 				timer: 4000,
 				showConfirmButton: false

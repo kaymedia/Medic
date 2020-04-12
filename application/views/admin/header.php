@@ -81,7 +81,14 @@
              <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="<?php echo base_url();?>assets/img/logo.png" width="250" alt="User" />
+                <?php if($this->logo != NULL){
+                        ?>
+                    <img src="<?php echo base_url();?>assets/img/<?php echo $this->logo; ?>" width="250" alt="User" />
+                <?php } ?>
+                <?php if($this->logo == NULL){
+                        ?>
+                    <img src="<?php echo base_url();?>assets/img/default.png" width="100" height= "100" alt="User" />
+                <?php } ?>
                 </div>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $nama; ?></div>
