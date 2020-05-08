@@ -1802,7 +1802,8 @@ class Admin extends CI_Controller {
 
 			//$crud->set_theme('datatables');
 			$crud->set_table('tbl_ruangan');
-			
+			$crud->field_type('statusruangan','dropdown',
+            array('1' => 'Aktif','0' => 'Tidak Aktif'));
 			$output = $crud->render();
 
 			$this->output($output);

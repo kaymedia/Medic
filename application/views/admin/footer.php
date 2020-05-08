@@ -5,6 +5,7 @@
 //            jika dipilih, kode obat akan masuk ke input dan modal di tutup
             $(document).on('click', '.pilih', function (e) {
                 document.getElementById("kode_pasien").value = $(this).attr('data-kodepasien');
+                document.getElementById("namapasien").value = $(this).attr('data-namapasien');
                 $('#myModal').modal('hide');
             });
 

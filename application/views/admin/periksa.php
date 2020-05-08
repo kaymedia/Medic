@@ -61,7 +61,8 @@
                                     <label for="varchar">Nama Pasien / Nomor Kartu Pasien</label>
                                      <div class="row">
                                         <div class="col-md-10">
-                                        <input type="text" class="form-control" name="cari" id="kode_pasien" placeholder="Pilih Nama Pasien / Nomor Kartu Pasien" readonly="" />
+                                        <input type="hidden" class="form-control" name="cari" id="kode_pasien" placeholder="Pilih Nama Pasien / Nomor Kartu Pasien" readonly="" />
+                                        <input type="text" class="form-control" name="" id="namapasien" placeholder="Pilih Nama Pasien / Nomor Kartu Pasien" readonly="" />
                                     </div>
                                     <div class="col-md-2">
                                         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">. . .</button>
@@ -97,7 +98,7 @@
                             </thead>
                              <tbody>
                             <?php foreach ($datapasien as $v) {?>
-                             <tr class="pilih" data-kodepasien="<?php echo $v->id_pasien; ?>">
+                             <tr class="pilih" data-kodepasien="<?php echo $v->id_pasien; ?>" data-namapasien="<?php echo $v->namapasien; ?>">
                                         <td><?php echo $v->nomorkartu; ?></td>
                                         <td><?php echo $v->namapasien; ?></td>
                                         <td><?php echo $v->namaortu; ?></td>
