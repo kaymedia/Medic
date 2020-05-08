@@ -31,7 +31,7 @@ CREATE TABLE `tbl_alergi` (
   `id_pasien` int NOT NULL,
   `statusalergi` varchar(10) NOT NULL,
   `alergi` text
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -47,7 +47,7 @@ CREATE TABLE `tbl_bahan_habis_pakai` (
   `id_satuanobat` int DEFAULT NULL,
   `harga_bahan` int DEFAULT NULL,
   `id_suplier` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -68,7 +68,7 @@ CREATE TABLE `tbl_beliobat` (
   `tanggalbeli` date DEFAULT NULL,
   `id_satuanobat` int NOT NULL,
   `id_jenisobat` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -80,7 +80,7 @@ CREATE TABLE `tbl_dokter` (
   `id_dokter` int NOT NULL,
   `namadokter` varchar(50) NOT NULL,
   `statusdokter` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -94,7 +94,7 @@ CREATE TABLE `tbl_jadwal` (
   `tanggal` date NOT NULL,
   `tgl_buat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -105,7 +105,7 @@ CREATE TABLE `tbl_jadwal` (
 CREATE TABLE `tbl_jenisobat` (
   `id_jenisobat` int NOT NULL,
   `jenisobat` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -122,7 +122,7 @@ CREATE TABLE `tbl_obat` (
   `stok` int NOT NULL,
   `id_jenisobat` int DEFAULT NULL,
   `id_suplier` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -142,7 +142,7 @@ CREATE TABLE `tbl_pasien` (
   `nohp` varchar(15) DEFAULT NULL,
   `tanggal` varchar(20) DEFAULT NULL,
   `namaortu` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -154,7 +154,7 @@ CREATE TABLE `tbl_pemasukan` (
   `kode` bigint NOT NULL,
   `jumlah` int NOT NULL,
   `tanggal` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -215,7 +215,7 @@ CREATE TABLE `tbl_pemeriksaan` (
   `id_tindakan` tinyint DEFAULT NULL,
   `id_bahan` smallint DEFAULT NULL,
   `jml_bahan` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -227,7 +227,7 @@ CREATE TABLE `tbl_ruangan` (
   `id_ruangan` int NOT NULL,
   `namaruangan` varchar(50) NOT NULL,
   `statusruangan` tinyint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -238,7 +238,7 @@ CREATE TABLE `tbl_ruangan` (
 CREATE TABLE `tbl_satuanobat` (
   `id_satuanobat` int NOT NULL,
   `satuanobat` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -256,7 +256,7 @@ CREATE TABLE `tbl_situs` (
   `logo` varchar(50) NOT NULL,
   `limitstok` int NOT NULL,
   `limitkadaluarsa` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tbl_situs`
@@ -278,7 +278,7 @@ CREATE TABLE `tbl_sms` (
   `nama` varchar(50) NOT NULL,
   `isi` text NOT NULL,
   `tanggal` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -291,7 +291,7 @@ CREATE TABLE `tbl_suplier` (
   `namasuplier` varchar(50) DEFAULT NULL,
   `alamatsuplier` text,
   `nohpsuplier` varchar(15) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -303,7 +303,7 @@ CREATE TABLE `tbl_tindakan` (
   `id_tindakan` int NOT NULL,
   `nama_tindakan` varchar(100) DEFAULT NULL,
   `biaya_tindakan` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -318,7 +318,7 @@ CREATE TABLE `tbl_user` (
   `nama` varchar(50) NOT NULL,
   `alamat` text NOT NULL,
   `nohp` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tbl_user`
