@@ -484,8 +484,8 @@
                                     <tbody>
 									    <tr>
 											<td><?php echo $no; ?></td>
-											<td><?php echo $vtmp2->tindakan; ?></td>
-											<td><?php echo $vtmp2->biaya; ?></td>
+											<td><?php echo $vtmp2->nama_tindakan; ?></td>
+											<td><?php echo $vtmp2->biaya_tindakan; ?></td>
                                         </tr>
 									<?php $no++; } ?>
                                     </tbody>

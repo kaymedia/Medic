@@ -307,8 +307,12 @@ class Master extends CI_Model{
         $query =$this->db->query("SELECT * FROM `tbl_obat` where stok >= 10");
         return $query->result();
 	}
+	public function sum_tindakan($id_tindakan){
+        $query =$this->db->query("SELECT sum(biaya_tindakan) as hitung from tbl_tindakan where id_tindakan = '$id_tindakan' ");
+        return $query->result();
+	} 
 	public function tampil_periksa1($kode){
-        $query =$this->db->query("SELECT tbl_pemeriksaan.diagnosa, tbl_pemeriksaan.keluhan, tbl_pemeriksaan.tanggal,tbl_pemeriksaan.tindakan, tbl_pemeriksaan.biaya, tbl_pemeriksaan.dosis, tbl_pemeriksaan.tinggi, tbl_pemeriksaan.berat, tbl_pemeriksaan.tekanandarah, tbl_pemeriksaan.suhu, tbl_pemeriksaan.kode, tbl_pemeriksaan.id_pemeriksaan FROM `tbl_pemeriksaan` where kode = '$kode' ");
+        $query =$this->db->query("SELECT tbl_pemeriksaan.diagnosa, tbl_pemeriksaan.keluhan, tbl_pemeriksaan.tanggal,tbl_pemeriksaan.id_tindakan, tbl_pemeriksaan.biaya, tbl_pemeriksaan.dosis, tbl_pemeriksaan.tinggi, tbl_pemeriksaan.berat, tbl_pemeriksaan.tekanandarah, tbl_pemeriksaan.suhu, tbl_pemeriksaan.kode, tbl_pemeriksaan.id_pemeriksaan, tbl_tindakan.id_tindakan, tbl_tindakan.nama_tindakan, tbl_tindakan.biaya_tindakan FROM `tbl_pemeriksaan`, tbl_tindakan where kode = '$kode' and tbl_pemeriksaan.id_tindakan = tbl_tindakan.id_tindakan ");
         return $query->result();
 	}
 	public function tampil_periksa2($kode){
@@ -316,7 +320,7 @@ class Master extends CI_Model{
         return $query->result();
 	}
 	public function tampil_periksa3($kode){
-        $query =$this->db->query("SELECT tbl_pemeriksaan.diagnosa, tbl_pemeriksaan.jumlahobat, tbl_pemeriksaan.keterangan, tbl_pemeriksaan.tanggal,tbl_pemeriksaan.tindakan, tbl_pemeriksaan.biaya, tbl_pemeriksaan.dosis, tbl_pemeriksaan.tinggi, tbl_pemeriksaan.berat, tbl_pemeriksaan.tekanandarah, tbl_pemeriksaan.suhu, tbl_pemeriksaan.kode, tbl_pemeriksaan.id_pemeriksaan, tbl_obat.namaobat, tbl_obat.hargaobat, tbl_obat.satuanobat FROM `tbl_pemeriksaan`, tbl_obat where kode = '$kode' and tbl_pemeriksaan.id_obat = tbl_obat.id_obat");
+        $query =$this->db->query("SELECT tbl_pemeriksaan.diagnosa, tbl_pemeriksaan.jumlahobat, tbl_pemeriksaan.keterangan, tbl_pemeriksaan.tanggal,tbl_pemeriksaan.tindakan, tbl_pemeriksaan.biaya, tbl_pemeriksaan.dosis, tbl_pemeriksaan.tinggi, tbl_pemeriksaan.berat, tbl_pemeriksaan.tekanandarah, tbl_pemeriksaan.suhu, tbl_pemeriksaan.kode, tbl_pemeriksaan.id_pemeriksaan, tbl_obat.namaobat, tbl_obat.hargaobat, tbl_obat.id_satuanobat, tbl_satuanobat.id_satuanobat, tbl_satuanobat.satuanobat FROM `tbl_pemeriksaan`, tbl_obat, tbl_satuanobat where kode = '$kode' and tbl_pemeriksaan.id_obat = tbl_obat.id_obat and tbl_obat.id_satuanobat = tbl_satuanobat.id_satuanobat");
         return $query->result();
 	}
 	public function simpan_periksa($data){

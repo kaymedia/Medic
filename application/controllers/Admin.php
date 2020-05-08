@@ -217,8 +217,15 @@ class Admin extends CI_Controller {
 		$tinggi = $this->input->post('tinggi');
 		$berat = $this->input->post('berat');
 		$diagnosa = $this->input->post('diagnosa');
-		$tindakan = $this->input->post('tindakan');
-		$biaya = $this->input->post('biaya');
+		//tindakan dan dokter
+		$id_tindakan = $this->input->post('id_tindakan');;
+		$id_dokter = $this->input->post('id_dokter');;
+		//
+		//bahan habis pakai
+		$id_bahan = $this->input->post('id_bahan');;
+		$jml_bahan = $this->input->post('jml_bahan');;
+		//
+
 		$obat = $this->input->post('obat');
 		$dosis = $this->input->post('dosis');
 		$keterangan = $this->input->post('keterangan');
@@ -287,8 +294,8 @@ class Admin extends CI_Controller {
 						  'berat' => $berat,
 						  'keluhan' => $keluhan[$i],
 						  'diagnosa' => $diagnosa[$i],
-						  'tindakan' => $tindakan[$i],
-						  'biaya' => $biaya[$i],
+						  'id_tindakan' => $id_tindakan[$i],
+						  'id_dokter' => $id_dokter[$i],
 						  'id_obat' => $obat[$i],
 						  'dosis' => $dosis[$i],
 						  'keterangan' => $keterangan,
@@ -324,7 +331,9 @@ class Admin extends CI_Controller {
 						  'textextrimitas' => $textekstrimitas,
 						  'kulit' => $kulit,
 						  'textkulit' => $textkulit,
-						  'jumlahobat' => $jumlahobat[$i]
+						  'jumlahobat' => $jumlahobat[$i],
+						  'id_bahan' => $id_bahan[$i],
+						  'jml_bahan' => $jml_bahan[$i]
 						  );
 		$ambilobat  = $this->master->ambildataobat($obat[$i]);
         foreach($ambilobat as $ambilobatku){
@@ -334,8 +343,15 @@ class Admin extends CI_Controller {
 			$this->master->simpan_obat($dataobat[$i], $obat[$i]);
 			
         }			
-		
-						
+		//ambil stok bahan habis pakai
+		$ambilbahan  = $this->master->lihat_data('tbl_bahan_habis_pakai', 'id_bahan', $id_bahan[$i]);
+        foreach($ambilbahan as $ambilbahan){
+            $stokbahansaatini[$i]  = $ambilbahan->stok;
+			$stokbahanfinal[$i] = $stokbahansaatini[$i] - $jml_bahan[$i];
+			$databahan[$i] = array('stok_bahan'  => $stokbahanfinal[$i]);
+			$this->master->simpan_data('tbl_bahan_habis_pakai','id_bahan', $id_bahan[$i], $databahan[$i]);
+			
+        }					
 
 
 		}

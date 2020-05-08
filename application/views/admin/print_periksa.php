@@ -90,6 +90,7 @@
 <thead><tr class="tableizer-firstrow"> 
                                             <th>No</th>
                                             <th>Tindakan</th>
+                                            <th>Biaya</th>
                                            </thead>
 											<?php $no = 1; foreach($periksa1 as $vp1){ 
 											
@@ -97,7 +98,8 @@
                                     <tbody>
 									     <tr>
                                             <td><?php echo $no; ?></td>
-                                            <td><?php echo $vp1->tindakan; ?></td>
+                                            <td><?php echo $vp1->nama_tindakan; ?></td>
+                                            <td>Rp.<?php echo number_format($vp1->biaya_tindakan,0,".","."). ''; ?></td>
                                             
 										 </tr>
 										

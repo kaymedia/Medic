@@ -1,6 +1,10 @@
  <?php foreach($periksa1 as $vp1){ 
-
- $arraybiaya[] = $vp1->biaya; } ?>
+     
+$ambiltindakan =  $this->master->sum_tindakan($vp1->id_tindakan);
+foreach($ambiltindakan as $ambiltindakan){
+    $arraybiaya[] = $ambiltindakan->hitung;
+}
+  } ?>
 <?php $no = 1; foreach($periksa3 as $vp1){ 
 											$arrayharga[] = $vp1->jumlahobat*$vp1->hargaobat;
 											$totalbiaya = array_sum($arraybiaya);
