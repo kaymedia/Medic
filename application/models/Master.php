@@ -401,7 +401,7 @@ class Master extends CI_Model{
 		else{
 			$sampai = $from = $this->uri->segment(3);
 		}
-        $query =$this->db->query("SELECT distinct(tbl_pemeriksaan.kode) , tbl_pemeriksaan.id_pasien, tbl_pasien.kelamin, tbl_pasien.namaortu, tbl_pasien.nomorkartu, tbl_pasien.namapasien , tbl_pasien.alamat, tbl_pemeriksaan.status FROM tbl_pemeriksaan INNER JOIN tbl_pasien ON (tbl_pemeriksaan.id_pasien = tbl_pasien.id_pasien) group by tbl_pemeriksaan.kode desc LIMIT $sampai, $dari ");
+        $query =$this->db->query("SELECT distinct(tbl_pemeriksaan.kode) , tbl_pemeriksaan.id_pasien, tbl_pasien.kelamin, tbl_pasien.namaortu, tbl_pasien.nomorkartu, tbl_pasien.namapasien , tbl_pasien.alamat, tbl_pemeriksaan.status FROM tbl_pemeriksaan INNER JOIN tbl_pasien ON (tbl_pemeriksaan.id_pasien = tbl_pasien.id_pasien) group by tbl_pemeriksaan.kode LIMIT $sampai, $dari ");
         return $query->result();	
 	}
 	public function page_cari_rawat($cari){
@@ -521,7 +521,7 @@ class Master extends CI_Model{
 	/////////////////////////////////////////////
 	//SMS
 	public function page_sms(){
-        $query =$this->db->query("SELECT * FROM `tbl_sms` group by kode");
+        $query =$this->db->query("SELECT kode FROM `tbl_sms` group by kode");
         return $query->num_rows();
 	}
 	public function data_sms($dari, $sampai){
@@ -532,7 +532,7 @@ class Master extends CI_Model{
 		else{
 			$sampai = $from = $this->uri->segment(3);
 		}
-        $query =$this->db->query("SELECT * FROM `tbl_sms` group by kode LIMIT $sampai, $dari ");
+        $query =$this->db->query("SELECT kode, nohp, nama, isi, tanggal FROM `tbl_sms` group by kode LIMIT $sampai, $dari ");
         return $query->result();	
 	}
 	public function smspasien(){
