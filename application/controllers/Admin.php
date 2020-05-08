@@ -385,12 +385,15 @@ class Admin extends CI_Controller {
 			echo "<script>window.location.href='".base_url('/admin/mpasienrawat')."' </script>";
 		}
 		$diagnosa = $this->input->post('diagnosa');
-		$tindakan = $this->input->post('tindakan');
+		$id_tindakan = $this->input->post('id_tindakan');
 		$biaya = $this->input->post('biaya');
 		$obat = $this->input->post('obat');
 		$dosis = $this->input->post('dosis');
 		$keluhan = $this->input->post('keluhan');
 		$jumlahobat = $this->input->post('jumlahobat');
+		$id_dokter = $this->input->post('id_dokter');
+		$id_bahan = $this->input->post('id_bahan');
+		$jml_bahan = $this->input->post('jml_bahan');
 		$tanggal = date('20y-m-d');
 		$jdiagnosa = sizeof($diagnosa);
 		$jdiagnosa = sizeof($diagnosa);
@@ -407,11 +410,14 @@ class Admin extends CI_Controller {
 						  'id_pasien' => $id_pasien,
 						  'keluhan' => $keluhan[$i],
 						  'diagnosa' => $diagnosa[$i],
-						  'tindakan' => $tindakan[$i],
+						  'id_tindakan' => $id_tindakan[$i],
+						  'id_bahan' => $id_bahan[$i],
+						  'jml_bahan' => $jml_bahan[$i],
 						  'biaya' => $biaya[$i],
 						  'tanggal' => $tanggal,
 						  'id_obat' => $obat[$i],
 						  'dosis' => $dosis[$i],
+						  'id_dokter' => $id_dokter,
 						  'jumlahobat' => $jumlahobat[$i]);
 						
 
