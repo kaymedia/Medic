@@ -118,6 +118,7 @@
                 <li><a href="<?php echo base_url()?>admin/mruangan"><i class="fa fa-folder-open">Ruangan</i> </a></li>
                 <li><a href="<?php echo base_url()?>admin/mjadwal"><i class="fa fa-folder-open">Jadwal</i> </a></li>
                 <li><a href="<?php echo base_url()?>admin/mtindakan"><i class="fa fa-folder-open">Tindakan</i> </a></li>
+                <li><a href="<?php echo base_url()?>admin/mdokter"><i class="fa fa-folder-open">Dokter</i> </a></li>
                 
                         </ul>
                 </li>

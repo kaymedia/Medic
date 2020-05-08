@@ -1812,7 +1812,31 @@ class Admin extends CI_Controller {
 		}
 		$this->load->view('/admin/footer');
 	}
-	
+	public function mdokter()
+	{
+		$data['namaklinik'] = $this->namaklinik;
+		$data['alamatklinik'] = $this->alamatklinik;
+		$data['nohpklinik'] = $this->nohpklinik; 
+		$data['judul'] = "Master DOkter - ".$this->namaklinik."";
+		$data['nama'] = $this->session->userdata('nama'); 
+		$data['username'] = $this->session->userdata('username'); 
+		$this->load->view('/admin/header', $data);
+		try{
+			$crud = new grocery_CRUD();
+
+			//$crud->set_theme('datatables');
+			$crud->set_table('tbl_dokter');
+			$crud->field_type('statusdokter','dropdown',
+            array('Aktif' => 'Aktif', 'Libur' => 'Libur','Cuti' => 'Cuti' , 'Tidak Aktif' => 'Tidak Aktif'));
+			$output = $crud->render();
+
+			$this->output($output);
+
+		}catch(Exception $e){
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
+		}
+		$this->load->view('/admin/footer');
+	}
 	public function user()
 	{
 		$data['namaklinik'] = $this->namaklinik;
