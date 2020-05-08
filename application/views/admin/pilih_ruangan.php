@@ -14,7 +14,8 @@
 				  <div class="form-group">
                                      <div class="row">
                                         <div class="col-md-10">
-                                        <input type="text" class="form-control" name="ruangan" id="kode_ruangan" placeholder="Pilih Ruangan" readonly="" />
+                                        <input type="hidden" class="form-control" name="ruangan" id="kode_ruangan" placeholder="Pilih Ruangan" readonly="" />
+                                        <input type="text" class="form-control" name="" id="namaruangan" placeholder="Pilih Ruangan" readonly="" />
                                     </div>
                                     <div class="col-md-2">
                                         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">. . .</button>
@@ -51,7 +52,7 @@
                             </thead>
                              <tbody>
                             <?php foreach ($ruangan as $v) {?>
-                             <tr class="pilih2" data-koderuangan="<?php echo $v->id_ruangan; ?>">
+                             <tr class="pilih2" data-koderuangan="<?php echo $v->id_ruangan; ?>" data-namaruangan="<?php echo $v->namaruangan; ?>">
                                         <td><?php echo $v->namaruangan; ?></td>
                                     </tr>
                             <?php } ?>                          

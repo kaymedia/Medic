@@ -638,6 +638,8 @@ class Admin extends CI_Controller {
 		}
 		$kodex = $this->session->userdata('kodexperiksa');
 		$ruangan = $this->input->post('ruangan');
+		$dataruangan = array ('statusruangan' => 1);
+		$this->master->simpan_data('tbl_ruangan','id_ruangan', $ruangan, $dataruangan);
 		$data = array ('id_ruangan' => $ruangan);
 		$ekz = $this->master->simpan_pilih_ruangan($data, $kode);
 		redirect(base_url("/admin/sukses_periksa/$kode/$id_pasien"));

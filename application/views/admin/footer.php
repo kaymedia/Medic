@@ -26,6 +26,7 @@
 //            jika dipilih, kode obat akan masuk ke input dan modal di tutup
             $(document).on('click', '.pilih2', function (e) {
                 document.getElementById("kode_ruangan").value = $(this).attr('data-koderuangan');
+                document.getElementById("namaruangan").value = $(this).attr('data-namaruangan');
                 $('#myModal').modal('hide');
             });
 
