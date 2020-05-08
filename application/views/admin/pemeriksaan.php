@@ -25,7 +25,7 @@ $(document).ready(function(){
 	var maxField = 100; //Input fields increment limitation
 	var addButton = $('.tindakan'); //Add button selector
 	var wrapper = $('.ttindakan'); //Input field wrapper
-	var fieldHTML = '<div class="col-xs-8"><label>Tindakan</label><input name="tindakan[]" type="text" class="form-control" placeholder="Tindakan Dari Dokter"></div><div class="col-xs-8"><label>Biaya</label><input type="text" name="biaya[]" class="form-control" placeholder="Biaya Tindakan Dokter"></div>'; //New input field html 
+	var fieldHTML = '<div class="col-xs-8"><select name="id_tindakan[]" class="form-control" required=""><?php foreach($tindakan as $tindakan){ ?><option value="<?php echo $tindakan->id_tindakan; ?>"><?php echo $tindakan->nama_tindakan; ?> - Rp.<?php echo number_format($tindakan->biaya_tindakan,0,".","."). ''; ?></option><?php } ?></select></div>'; //New input field html 
 	var x = 1; //Initial field counter is 1
 	$(addButton).click(function(){ //Once add button is clicked
 		if(x < maxField){ //Check maximum number of input fields
@@ -66,6 +66,25 @@ $(document).ready(function(){
 	var addButton = $('.keluhan'); //Add button selector
 	var wrapper = $('.tkeluhan'); //Input field wrapper
 	var fieldHTML = '<div class="col-xs-8"><label>Keluhan</label><input type="text" name="keluhan[]" class="form-control" placeholder="Keluhan Pasien"></div>'; //New input field html 
+	var x = 1; //Initial field counter is 1
+	$(addButton).click(function(){ //Once add button is clicked
+		if(x < maxField){ //Check maximum number of input fields
+			x++; //Increment field counter
+			$(wrapper).append(fieldHTML); // Add field html
+		}
+	});
+	$(wrapper).on('click', '.remove_button', function(e){ //Once remove button is clicked
+		e.preventDefault();
+		$(this).parent('div').remove(); //Remove field html
+		x--; //Decrement field counter
+	});
+});
+</script><script type="text/javascript">
+$(document).ready(function(){
+	var maxField = 100; //Input fields increment limitation
+	var addButton = $('.bahanhabis'); //Add button selector
+	var wrapper = $('.tbahanhabis'); //Input field wrapper
+	var fieldHTML = '<div class="col-xs-8"><label>Bahan Habis Pakai</label><select name="id_bahan[]" class="form-control" required=""><?php foreach($bahanhabis as $bahanhabis){ ?><option value="<?php echo $bahanhabis->id_bahan; ?>"><?php echo $bahanhabis->nama_bahan; ?> - Rp.<?php echo number_format($bahanhabis->harga_bahan,0,".","."). ''; ?></option><?php } ?></select> </div><div class="col-xs-8"><label>Jumlah</label><input type="number" name="jml_bahan[]" class="form-control" placeholder="Contoh : 10 pcs." required=""></div><div class="tbahanhabis"></div>'; //New input field html 
 	var x = 1; //Initial field counter is 1
 	$(addButton).click(function(){ //Once add button is clicked
 		if(x < maxField){ //Check maximum number of input fields
@@ -431,25 +450,43 @@ $(document).ready(function(){
 					</select></td>
 					<td><label class="radio-inline"><input type="text"  placeholder="Keterangan" class="form-control" name="textkulit"></label></td>
 					</thead></tr></table>
-				   <div class="row">
-                    <div class="col-xs-8">
+				   
+                    
+				  <hr>
+				  <div class="row">
+				  <div class="col-xs-8">
 					<label>Tindakan</label>
-                      <input type="text" name="tindakan[]" class="form-control" placeholder="Tindakan Dari Dokter" required="">
+					<select name="id_tindakan[]" class="form-control" required="">
+					<?php foreach($tindakan2 as $tindakan2){ ?>
+					<option value="<?php echo $tindakan2->id_tindakan; ?>"><?php echo $tindakan2->nama_tindakan; ?> - Rp.<?php echo number_format($tindakan2->biaya_tindakan,0,".","."). ''; ?></option>
+					<?php } ?>
+					</select>
                     </div>
 					
-					<div class="col-xs-8">
-					<label>Biaya</label>
-                      <input type="text" name="biaya[]" class="form-control" placeholder="Biaya Tindakan Dokter" required="">
-                    </div>
 					<div class="ttindakan"></div>
 					<div class="col-xs-4">
 					<label>Klik Untuk Menambah Tindakan</label>
-                      <a href="javascript:void(0);" class="tindakan" title="Add field"><img src="<?php echo base_url(); ?>/assets/img/add.png"/></a>
+                       <a href="javascript:void(0);" class="tindakan" title="Add field"><img src="<?php echo base_url(); ?>/assets/img/add.png"/></a>
                     </div>
-					
-                  </div>
-				  <hr>
-				  <div class="row">
+				  <br>
+				  <div class="col-xs-8">
+					<label>Bahan Habis Pakai</label>
+					<select name="id_bahan[]" class="form-control" required="">
+					<?php foreach($bahanhabis2 as $bahanhabis2){ ?>
+					<option value="<?php echo $bahanhabis2->id_bahan; ?>"><?php echo $bahanhabis2->nama_bahan; ?> - Rp.<?php echo number_format($bahanhabis2->harga_bahan,0,".","."). ''; ?></option>
+					<?php } ?>
+					</select>
+                    </div>
+					<div class="col-xs-8">
+					<label>Jumlah</label>
+                      <input type="number" name="jml_bahan[]" class="form-control" placeholder="Contoh : 10 pcs." required="">
+                    </div>
+					<div class="tbahanhabis"></div>
+					<div class="col-xs-4">
+					<label>Klik Untuk Menambah Bahan Habis Pakai</label>
+                       <a href="javascript:void(0);" class="bahanhabis" title="Add field"><img src="<?php echo base_url(); ?>/assets/img/add.png"/></a>
+                    </div>
+				  <br>
                     <div class="col-xs-8">
 					<label>Obat</label>
 					<select name="obat[]" class="form-control" required="">
@@ -484,6 +521,13 @@ $(document).ready(function(){
 					<option value="Rawat Inap">Rawat Inap</option>
 					<option value="Pulang">Pulang</option>
 					<option value="Rawat Jalan">Rawat Jalan</option>
+					</select>
+					<br>
+					<label>Pilih Dokter</label>
+                 <select name="id_dokter" class="form-control">
+				 <?php foreach ($dokter as $dokter){ ?>
+					<option value="<?php echo $dokter->id_dokter; ?>"><?php echo $dokter->namadokter; ?></option>
+				 <?php } ?>
 					</select>
 				<div class="modal-footer">
                                     <button class="btn btn-info" type="submit">Selanjutnya</button>

@@ -187,6 +187,11 @@ class Admin extends CI_Controller {
 		$data['obat'] = $this->master->obat_periksa();
 		$data['pasien'] = $this->master->view_pasien_jadwal($id_pasien);
 		$data['alergi'] = $this->master->lihat_alergi($id_pasien);
+		$data['dokter'] = $this->master->lihat_data('tbl_dokter', '1', '1');
+		$data['tindakan'] = $this->master->lihat_data('tbl_tindakan', '1', '1');
+		$data['tindakan2'] = $this->master->lihat_data('tbl_tindakan', '1', '1');
+		$data['bahanhabis'] = $this->master->lihat_data('tbl_bahan_habis_pakai', '1', '1');
+		$data['bahanhabis2'] = $this->master->lihat_data('tbl_bahan_habis_pakai', '1', '1');
 		$this->load->view('/admin/pemeriksaan', $data);
 		$this->load->view('/admin/footer');
 	}
