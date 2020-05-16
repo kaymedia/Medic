@@ -104,6 +104,9 @@ $(document).ready(function(){
             <div class="block-header">
                 <h2>PEMERIKSAAN PASIEN</h2>
             </div>
+			<div class="alert alert-info alert-dismissible" role="alert">
+                               
+                               <marquee> Untuk menambah <b>Keluhan, Diagnosa, Obat, Tindakan dan Bahan Habis Pakai </b> Silahkan tekan ikon + (PLUS) yang ada disamping form.</marquee>                            </div>
 <div class="row clearfix">
                 <!-- Task Info -->
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -120,55 +123,55 @@ $(document).ready(function(){
 						 <?php foreach($pasien as $vpasien){ ?>
                 <div class="col-md-4">
                    <div class="form-group">
-								<div class="form-line">
+								<div class="">
 								<label for="exampleInputEmail1">No. Kartu</label>
                       <input type="text" class="form-control" id="exampleInputEmail1" value="<?php echo $vpasien->nomorkartu; ?>" disabled>
                     </div><!-- /.form-group -->
                     </div><!-- /.form-group -->
 					<div class="form-group">
-								<div class="form-line">
+								<div class="">
                       <label for="exampleInputEmail1">Nama Pasien</label>
                       <input type="text" class="form-control" id="exampleInputEmail1" value="<?php echo $vpasien->namapasien; ?>" disabled>
                     </div>
                     </div>
 					<div class="form-group">
-								<div class="form-line">
+								<div class="">
                       <label for="exampleInputEmail1">Tanggal Lahir</label>
                       <input type="text" class="form-control" id="exampleInputEmail1" value="<?php echo tgl_indo($vpasien->ttl); ?>" disabled>
                     </div>
                     </div>
 					<div class="form-group">
-								<div class="form-line">
+								<div class="">
                       <label for="exampleInputEmail1">Umur</label>
                       <input type="text" class="form-control" id="exampleInputEmail1" value="<?php echo $vpasien->umur; ?>" disabled>
                     </div>
                     </div>
 					<div class="form-group">
-								<div class="form-line">
+								<div class="">
                       <label>Jenis Kelamin</label>
                       <input type="text" class="form-control" id="exampleInputEmail1" value="<?php echo $vpasien->kelamin; ?>" disabled>
                     </div><!-- /.form-group -->
                     </div><!-- /.form-group -->
                   <div class="form-group">
-								<div class="form-line">
+								<div class="">
                       <label>Alamat</label>
                       <textarea class="form-control" rows="2" placeholder="Enter ..." disabled><?php echo $vpasien->alamat; ?></textarea>
                     </div>
                     </div>
 				<div class="form-group">
-								<div class="form-line">
+								<div class="">
                       <label for="exampleInputEmail1">Telepon</label>
                       <input type="text" class="form-control" id="exampleInputEmail1" value="<?php echo $vpasien->nohp; ?>" disabled>
                     </div>
                     </div>
 					<div class="form-group">
-								 <div class="form-line">
+								 <div class="">
 									  <label for="exampleInputEmail1">Nama Orang Tua</label>
 									  <input name="namaortu" type="text" class="form-control" id="exampleInputEmail1" value="<?php echo $vpasien->namaortu; ?>" readonly>
 									</div><!-- /.form-group -->
 									</div><!-- /.form-group -->
 								 <div class="form-group">
-								  <div class="form-line">
+								  <div class="">
 									  <label for="exampleInputEmail1">Tanggal Daftar</label>
 									  <input name="tanggal" type="text" class="form-control" id="exampleInputEmail1" value="<?php echo tgl_indo($vpasien->tanggal); ?>" readonly>
 									</div><!-- /.form-group -->
