@@ -36,8 +36,11 @@
                                             <td><?php echo $v->namaortu; ?></td>
                                             <td><?php echo $v->kelamin; ?></td>
                                             <td><?php echo $v->alamat; ?></td>
-                                            <td><?php echo $v->umur; ?></td>
-                                            <td><a href="<?php echo base_url("admin/lihat_pasien/$v->id_pasien"); ?>"><button class="btn btn-success">Lihat</button></a> <a target="___blank" href="<?php echo base_url("admin/rekam_medis/$v->id_pasien"); ?>"><button class="btn btn-primary">Rekam Medis</button></a> <a href="<?php echo base_url("admin/edit_pasien/$v->id_pasien"); ?>"><button class="btn btn-waring">Edit</button></a> <a href="<?php echo base_url("admin/hapus_pasien/$v->id_pasien"); ?>"><button onclick="javascript : return confirm('Apakah Anda Yakin Ingin Menghapus ?')" class="btn btn-danger">Hapus</button></a></td>
+                                            <td><?php echo $v->umur; ?> Tahun</td>
+                                            <td><a href="<?php echo base_url("admin/lihat_pasien/$v->id_pasien"); ?>"><button class="btn btn-success">Lihat</button></a>
+                                            <br> <a target="___blank" href="<?php echo base_url("admin/rekam_medis/$v->id_pasien"); ?>"><button class="btn btn-primary">Rekam Medis</button></a>
+                                            <br><a href="<?php echo base_url("admin/edit_pasien/$v->id_pasien"); ?>"><button class="btn btn-warning">Edit</button></a> 
+                                             <br><a href="<?php echo base_url("admin/hapus_pasien/$v->id_pasien"); ?>"><button onclick="javascript : return confirm('Apakah Anda Yakin Ingin Menghapus ?')" class="btn btn-danger">Hapus</button></a></td>
                                         </tr>
 									<?php $no++; } ?>
                                     </tbody>
