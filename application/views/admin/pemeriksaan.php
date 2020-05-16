@@ -5,7 +5,7 @@ $(document).ready(function(){
 	var maxField = 100; //Input fields increment limitation
 	var addButton = $('.diagnosa'); //Add button selector
 	var wrapper = $('.tdiagnosa'); //Input field wrapper
-	var fieldHTML = ' <div class="col-xs-8"><label>Diagnosa</label> <input type="text" name="diagnosa[]" class="form-control" placeholder="Diagnosa Penyakit"></div>'; //New input field html 
+	var fieldHTML = ' <div class="col-xs-8"><label>Diagnosa</label> <input type="text" name="diagnosa[]" class="form-control" placeholder="Diagnosa Penyakit"><a href="#" class="remove_button">Hapus</a></div></div>'; //New input field html 
 	var x = 1; //Initial field counter is 1
 	$(addButton).click(function(){ //Once add button is clicked
 		if(x < maxField){ //Check maximum number of input fields
@@ -25,7 +25,7 @@ $(document).ready(function(){
 	var maxField = 100; //Input fields increment limitation
 	var addButton = $('.tindakan'); //Add button selector
 	var wrapper = $('.ttindakan'); //Input field wrapper
-	var fieldHTML = '<div class="col-xs-8"><select name="id_tindakan[]" class="form-control" required=""><?php foreach($tindakan as $tindakan){ ?><option value="<?php echo $tindakan->id_tindakan; ?>"><?php echo $tindakan->nama_tindakan; ?> - Rp.<?php echo number_format($tindakan->biaya_tindakan,0,".","."). ''; ?></option><?php } ?></select></div>'; //New input field html 
+	var fieldHTML = '<div class="col-xs-8"><select name="id_tindakan[]" class="form-control" required=""><?php foreach($tindakan as $tindakan){ ?><option value="<?php echo $tindakan->id_tindakan; ?>"><?php echo $tindakan->nama_tindakan; ?> - Rp.<?php echo number_format($tindakan->biaya_tindakan,0,".","."). ''; ?></option><?php } ?></select><a href="#" class="remove_button">Hapus</a></div>'; //New input field html 
 	var x = 1; //Initial field counter is 1
 	$(addButton).click(function(){ //Once add button is clicked
 		if(x < maxField){ //Check maximum number of input fields
@@ -45,7 +45,7 @@ $(document).ready(function(){
 	var maxField = 100; //Input fields increment limitation
 	var addButton = $('.obat'); //Add button selector
 	var wrapper = $('.tobat'); //Input field wrapper
-	var fieldHTML = '<div class="col-xs-8"><label>Obat</label><select name="obat[]" class="form-control"><?php foreach($obat as $vobat){ ?><option value="<?php echo $vobat->id_obat; ?>"><?php echo $vobat->namaobat; ?><?php } ?></option></select> </div><div class="col-xs-8"><label>Dosis</label><input type="text" name="dosis[]" class="form-control" placeholder="Contoh : 3 x 1 Hari."><label>Jumlah Obat</label><input type="number" name="jumlahobat[]" class="form-control" placeholder="Contoh : 10 Butir."></div>'; //New input field html 
+	var fieldHTML = '<div class="col-xs-8"><label>Obat</label><select name="obat[]" class="form-control"><?php foreach($obat as $vobat){ ?><option value="<?php echo $vobat->id_obat; ?>"><?php echo $vobat->namaobat; ?><?php } ?></option></select> <a href="#" class="remove_button">Hapus</a></div><div class="col-xs-8"><label>Dosis</label><input type="text" name="dosis[]" class="form-control" placeholder="Contoh : 3 x 1 Hari."><label>Jumlah Obat</label><input type="number" name="jumlahobat[]" class="form-control" placeholder="Contoh : 10 Butir."><a href="#" class="remove_button">Hapus</a></div>'; //New input field html 
 	var x = 1; //Initial field counter is 1
 	$(addButton).click(function(){ //Once add button is clicked
 		if(x < maxField){ //Check maximum number of input fields
@@ -65,7 +65,7 @@ $(document).ready(function(){
 	var maxField = 100; //Input fields increment limitation
 	var addButton = $('.keluhan'); //Add button selector
 	var wrapper = $('.tkeluhan'); //Input field wrapper
-	var fieldHTML = '<div class="col-xs-8"><label>Keluhan</label><input type="text" name="keluhan[]" class="form-control" placeholder="Keluhan Pasien"></div>'; //New input field html 
+	var fieldHTML = '<div class="col-xs-8"><label>Keluhan</label><input type="text" name="keluhan[]" class="form-control" placeholder="Keluhan Pasien"><a href="#" class="remove_button">Hapus</a></div>'; //New input field html 
 	var x = 1; //Initial field counter is 1
 	$(addButton).click(function(){ //Once add button is clicked
 		if(x < maxField){ //Check maximum number of input fields
@@ -84,7 +84,7 @@ $(document).ready(function(){
 	var maxField = 100; //Input fields increment limitation
 	var addButton = $('.bahanhabis'); //Add button selector
 	var wrapper = $('.tbahanhabis'); //Input field wrapper
-	var fieldHTML = '<div class="col-xs-8"><label>Bahan Habis Pakai</label><select name="id_bahan[]" class="form-control" required=""><?php foreach($bahanhabis as $bahanhabis){ ?><option value="<?php echo $bahanhabis->id_bahan; ?>"><?php echo $bahanhabis->nama_bahan; ?> - Rp.<?php echo number_format($bahanhabis->harga_bahan,0,".","."). ''; ?></option><?php } ?></select> </div><div class="col-xs-8"><label>Jumlah</label><input type="number" name="jml_bahan[]" class="form-control" placeholder="Contoh : 10 pcs." required=""></div><div class="tbahanhabis"></div>'; //New input field html 
+	var fieldHTML = '<div class="col-xs-8"><label>Bahan Habis Pakai</label><select name="id_bahan[]" class="form-control" required=""><?php foreach($bahanhabis as $bahanhabis){ ?><option value="<?php echo $bahanhabis->id_bahan; ?>"><?php echo $bahanhabis->nama_bahan; ?> - Rp.<?php echo number_format($bahanhabis->harga_bahan,0,".","."). ''; ?></option><?php } ?></select><a href="#" class="remove_button">Hapus</a> </div><div class="col-xs-8"><label>Jumlah</label><input type="number" name="jml_bahan[]" class="form-control" placeholder="Contoh : 10 pcs." required=""><a href="#" class="remove_button">Hapus</a></div></div>'; //New input field html 
 	var x = 1; //Initial field counter is 1
 	$(addButton).click(function(){ //Once add button is clicked
 		if(x < maxField){ //Check maximum number of input fields
