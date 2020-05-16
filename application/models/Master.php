@@ -373,7 +373,7 @@ class Master extends CI_Model{
         return $query->result();
 	}
 	public function rekam_medis1($id_pasien){
-        $query =$this->db->query("SELECT tbl_pemeriksaan.diagnosa, tbl_pemeriksaan.jumlahobat, tbl_pemeriksaan.keterangan, tbl_pemeriksaan.tanggal,tbl_pemeriksaan.tindakan, tbl_pemeriksaan.biaya, tbl_pemeriksaan.dosis, tbl_pemeriksaan.tinggi, tbl_pemeriksaan.berat, tbl_pemeriksaan.tekanandarah, tbl_pemeriksaan.suhu, tbl_pemeriksaan.kode, tbl_pemeriksaan.id_pemeriksaan, tbl_obat.namaobat, tbl_obat.hargaobat, tbl_obat.satuanobat FROM `tbl_pemeriksaan`, tbl_obat where tbl_pemeriksaan.id_pasien = '$id_pasien' and tbl_pemeriksaan.id_obat = tbl_obat.id_obat");
+        $query =$this->db->query("SELECT tbl_pemeriksaan.diagnosa, tbl_pemeriksaan.jumlahobat, tbl_pemeriksaan.keterangan, tbl_pemeriksaan.tanggal,tbl_pemeriksaan.tindakan, tbl_pemeriksaan.biaya, tbl_pemeriksaan.dosis, tbl_pemeriksaan.tinggi, tbl_pemeriksaan.berat, tbl_pemeriksaan.tekanandarah, tbl_pemeriksaan.suhu, tbl_pemeriksaan.kode, tbl_pemeriksaan.id_pemeriksaan, tbl_obat.namaobat, tbl_obat.hargaobat, tbl_obat.id_satuanobat, tbl_satuanobat.satuanobat FROM `tbl_pemeriksaan`, tbl_obat, tbl_satuanobat where tbl_pemeriksaan.id_pasien = '$id_pasien' and tbl_obat.id_satuanobat = tbl_satuanobat.id_satuanobat and tbl_pemeriksaan.id_obat = tbl_obat.id_obat");
         return $query->result();
 	}
 	public function page_cari_pasien($cari){
