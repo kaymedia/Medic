@@ -1393,31 +1393,31 @@ class Admin extends CI_Controller {
 		$namaklinik = $this->namaklinik;
 		$tanggal = date('20y-m-d');
 		$this->load->view('/admin/print_kartu_pasien', $data);
-		$pdfFilePath = FCPATH."/assets/pdf/kartupasien/$namaklinik-$id_pasien-($tanggal).pdf";
+		// $pdfFilePath = FCPATH."/assets/pdf/kartupasien/$namaklinik-$id_pasien-($tanggal).pdf";
 
-		if (file_exists($pdfFilePath) == FALSE)
+		// if (file_exists($pdfFilePath) == FALSE)
 
-		{
+		// {
 
-			ini_set('memory_limit','32M'); // boost the memory limit if it's low ;)
+		// 	ini_set('memory_limit','32M'); // boost the memory limit if it's low ;)
 
-			$html = $this->load->view('/admin/print_kartu_pasien', $data, true); // render the view into HTML
-
-
-			$this->load->library('pdf');
-
-			$pdf = $this->pdf->load();
-
-			$pdf->SetFooter($_SERVER['HTTP_HOST'].'|{PAGENO}|'.date(DATE_RFC822)); // Add a footer for good measure ;)
-
-			$pdf->SetJS('window.print();');
-			$pdf->WriteHTML($html);
-			$pdf->Output($pdfFilePath, 'F');
-
-		}
+		// 	$html = $this->load->view('/admin/print_kartu_pasien', $data, true); // render the view into HTML
 
 
-		redirect("/assets/pdf/kartupasien/$namaklinik-$id_pasien-($tanggal).pdf");
+		// 	$this->load->library('pdf');
+
+		// 	$pdf = $this->pdf->load();
+
+		// 	$pdf->SetFooter($_SERVER['HTTP_HOST'].'|{PAGENO}|'.date(DATE_RFC822)); // Add a footer for good measure ;)
+
+		// 	$pdf->SetJS('window.print();');
+		// 	$pdf->WriteHTML($html);
+		// 	$pdf->Output($pdfFilePath, 'F');
+
+		// }
+
+
+		// redirect("/assets/pdf/kartupasien/$namaklinik-$id_pasien-($tanggal).pdf");
 	}
 	public function rekam_medis($id_pasien)
 	{
