@@ -3033,107 +3033,14 @@ class Admin extends CI_Controller {
 			 </script>"; 
     }
 	public function exportpasien(){
-        $ambildata = $this->master->exportpasien();
-         
-        if(count($ambildata)>0){
-            $objPHPExcel = new PHPExcel();
-            // Set properties
-            $objPHPExcel->getProperties()
-                  ->setCreator("Kay Media") //creator
-                    ->setTitle("Master Pasien");  //file title
- 
-            $objset = $objPHPExcel->setActiveSheetIndex(0); //inisiasi set object
-            $objget = $objPHPExcel->getActiveSheet();  //inisiasi get object
- 
-            $objget->setTitle('Sample Sheet'); //sheet title
-             
-            $objget->getStyle("A1:K1")->applyFromArray(
-                array(
-                    'fill' => array(
-                        'type' => PHPExcel_Style_Fill::FILL_SOLID,
-                        'color' => array('rgb' => '1ee921')
-                    ),
-                    'font' => array(
-                        'color' => array('rgb' => '000000')
-                    )
-                )
-            );
- 
-            //table header
-            $cols = array("A","B","C", "D", "E", "F", "G", "H", "I", "J", "K");
-             
-            $val = array("No","Nomor Kartu ","Nama Pasien","Tanggal Lahir", "Umur", "Pekerjaan", "Jenis Kelamin", "Alamat", "Nomor HP", "Tanggal Daftar", "Nama Orangtua");
-             
-            for ($a=0;$a<11; $a++) 
-            {
-                $objset->setCellValue($cols[$a].'1', $val[$a]);
-                 
-                //Setting lebar cell
-                $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(5); 
-                $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(20); 
-                $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(40); 
-                $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(40); 
-                $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(10); 
-                $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(25); 
-                $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(15); 
-                $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(50); 
-                $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(25); 
-                $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(25); 
-                $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(30); 
-             
-                $style = array(
-                    'alignment' => array(
-                        'horizontal' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
-                    )
-                );
-                $objPHPExcel->getActiveSheet()->getStyle($cols[$a].'1')->applyFromArray($style);
-            }
-             
-            $baris  = 2; 
-			$no = 1;
-            foreach  ($ambildata as $frow){
-                 
-                //pemanggilan sesuaikan dengan nama kolom tabel
-                $objset->setCellValue("A".$baris, $no); 
-                $objset->setCellValue("B".$baris, $frow->nomorkartu); 
-                $objset->setCellValue("C".$baris, $frow->namapasien); 
-                $objset->setCellValue("D".$baris, tgl_indo($frow->ttl)); 
-                $objset->setCellValue("E".$baris, $frow->umur); 
-                $objset->setCellValue("F".$baris, $frow->pekerjaan); 
-                $objset->setCellValue("G".$baris, $frow->kelamin); 
-                $objset->setCellValue("H".$baris, $frow->alamat); 
-                $objset->setCellValue("I".$baris, $frow->nohp); 
-                $objset->setCellValue("J".$baris, tgl_indo($frow->tanggal)); 
-                $objset->setCellValue("K".$baris, $frow->namaortu);  
-                 
-                //Set number value
-                $objPHPExcel->getActiveSheet()->getStyle('C1:C'.$baris)->getNumberFormat()->setFormatCode('0');
-                 
-				$style = array(
-                    'alignment' => array(
-                        'horizontal' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
-                    )
-                );
-                $objPHPExcel->getActiveSheet()->getStyle('A1:O5000')->applyFromArray($style);
-                $baris++;
-				$no++;
-				
-            }
-             
-            $objPHPExcel->getActiveSheet()->setTitle('Data Export');
-			
- 
-            $objPHPExcel->setActiveSheetIndex(0);  
-            $filename = urlencode("Data".date("Y-m-d H:i:s").".xls");
-               
-              header('Content-Type: application/vnd.ms-excel'); //mime type
-              header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
-              header('Cache-Control: max-age=0'); //no cache
- 
-            $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel5');                
-            $objWriter->save('php://output');
-        }else{
-            redirect('Excel');
-        }
-    }
+       // $ambildata = $this->master->exportpasien();
+		
+		$data['nama'] = $this->session->userdata('nama');
+		$data['namaklinik'] = $this->namaklinik;
+		$data['alamatklinik'] = $this->alamatklinik;
+		$data['nohpklinik'] = $this->nohpklinik; 
+		$data['selisih'] = 0; 
+		$data['v'] = $this->master->exportpasien();
+		$this->load->view('/admin/print_pasien', $data);
+	}
 }

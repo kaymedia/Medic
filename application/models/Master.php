@@ -573,12 +573,7 @@ class Master extends CI_Model{
 	function exportpasien(){
         $query = $this->db->query("SELECT * from tbl_pasien order by id_pasien ASC");
          
-        if($query->num_rows() > 0){
-            foreach($query->result() as $data){
-                $hasil[] = $data;
-            }
-            return $hasil;
-        }
+		return $query->result();
 	}
 	public function page_satuanobat(){
         $query =$this->db->query("SELECT * FROM `tbl_satuanobat`");

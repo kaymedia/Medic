@@ -10,7 +10,7 @@
                        
                         <div class="body">
 							<div class="table-responsive">
-							<a href="<?php echo base_url("admin/daftar"); ?>"><button class="btn btn-primary ">Daftar Pasien Baru</button></a> <button data-toggle="modal" data-target="#cari" class="btn btn-primary">Cari Pasien</button> <a href="<?php echo base_url("/admin/exportpasien"); ?>"><button class="btn btn-success">Export Pasien ke Excel</button></a>
+							<a href="<?php echo base_url("admin/daftar"); ?>"><button class="btn btn-primary ">Daftar Pasien Baru</button></a> <button data-toggle="modal" data-target="#cari" class="btn btn-primary">Cari Pasien</button> <a href="<?php echo base_url("/admin/exportpasien"); ?>" target="_blank"><button class="btn btn-success">Export Pasien ke Excel</button></a>
 							<div class=" pull-right"><i class="fa fa-check"></i> <?php echo $jd; ?> Pasien ditemukan.</div>
 							<p>
 							<div class="table-responsive">
