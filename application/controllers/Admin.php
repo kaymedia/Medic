@@ -1887,6 +1887,7 @@ class Admin extends CI_Controller {
 			//$crud->set_theme('datatables');
 			$crud->set_table('tbl_user');
 			$crud->callback_before_insert(array($this,'encrypt_password'));
+			$crud->callback_before_update(array($this,'encrypt_password'));
 			$output = $crud->render();
 
 			$this->output($output);
