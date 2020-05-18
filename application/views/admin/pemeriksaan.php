@@ -122,7 +122,7 @@ $(document).ready(function(){
 					   <?php } } ?>
 						 <div class="row">
 						 <?php foreach($pasien as $vpasien){ ?>
-							<div class="col-md-4">
+							<div class="col-md-3">
 						 <table class="table tabel-responsive">
 							<tr>
 								<td>No. Kartu</td>
@@ -168,7 +168,7 @@ $(document).ready(function(){
 									</table>
                 </div><!-- /.col -->
 				<form role="form" action="<?php echo base_url("/admin/simpan_periksa/$vpasien->id_pasien"); ?>" enctype="multipart/form-data" method="post">
-                <div class="col-md-7">
+                <div class="col-md-8">
 					<div class="row">
 					<div class="col-xs-3">
 					<label>Suhu Badan</label>

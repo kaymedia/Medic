@@ -6,13 +6,13 @@
 <div class="row clearfix">
                 <!-- Task Info -->
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="">
-                       
+                    <div class="card">
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                               
+                               <marquee> Untuk pasien yang belum terdaftar silahkan pilih tombol <b>PASIEN BARU</b> jika telah terdaftar silahkan pilih tombol <b> PASIEN TERDAFTAR</b>.</marquee>                            </div>
                         <div class="body">
 						
-						<div class="">
-                        
-                        <div class="body">
+						<div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 						<div class="info-box bg-cyan ">
 							<div class="icon">
