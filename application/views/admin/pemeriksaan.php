@@ -111,6 +111,7 @@ $(document).ready(function(){
                 <!-- Task Info -->
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="card">
+					<br>
                        <?php foreach($alergi as $cekwarna){
 						   if($cekwarna->statusalergi == "Iya"){ ?>
                         <div class="bodyred">
@@ -121,64 +122,53 @@ $(document).ready(function(){
 					   <?php } } ?>
 						 <div class="row">
 						 <?php foreach($pasien as $vpasien){ ?>
-                <div class="col-md-4">
-                   <div class="form-group">
-								<div class="">
-								<label for="exampleInputEmail1">No. Kartu</label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" value="<?php echo $vpasien->nomorkartu; ?>" disabled>
-                    </div><!-- /.form-group -->
-                    </div><!-- /.form-group -->
-					<div class="form-group">
-								<div class="">
-                      <label for="exampleInputEmail1">Nama Pasien</label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" value="<?php echo $vpasien->namapasien; ?>" disabled>
-                    </div>
-                    </div>
-					<div class="form-group">
-								<div class="">
-                      <label for="exampleInputEmail1">Tanggal Lahir</label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" value="<?php echo tgl_indo($vpasien->ttl); ?>" disabled>
-                    </div>
-                    </div>
-					<div class="form-group">
-								<div class="">
-                      <label for="exampleInputEmail1">Umur</label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" value="<?php echo $vpasien->umur; ?>" disabled>
-                    </div>
-                    </div>
-					<div class="form-group">
-								<div class="">
-                      <label>Jenis Kelamin</label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" value="<?php echo $vpasien->kelamin; ?>" disabled>
-                    </div><!-- /.form-group -->
-                    </div><!-- /.form-group -->
-                  <div class="form-group">
-								<div class="">
-                      <label>Alamat</label>
-                      <textarea class="form-control" rows="2" placeholder="Enter ..." disabled><?php echo $vpasien->alamat; ?></textarea>
-                    </div>
-                    </div>
-				<div class="form-group">
-								<div class="">
-                      <label for="exampleInputEmail1">Telepon</label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" value="<?php echo $vpasien->nohp; ?>" disabled>
-                    </div>
-                    </div>
-					<div class="form-group">
-								 <div class="">
-									  <label for="exampleInputEmail1">Nama Orang Tua</label>
-									  <input name="namaortu" type="text" class="form-control" id="exampleInputEmail1" value="<?php echo $vpasien->namaortu; ?>" readonly>
-									</div><!-- /.form-group -->
-									</div><!-- /.form-group -->
-								 <div class="form-group">
-								  <div class="">
-									  <label for="exampleInputEmail1">Tanggal Daftar</label>
-									  <input name="tanggal" type="text" class="form-control" id="exampleInputEmail1" value="<?php echo tgl_indo($vpasien->tanggal); ?>" readonly>
-									</div><!-- /.form-group -->
-									</div><!-- /.form-group -->
+							<div class="col-md-4">
+						 <table class="table tabel-responsive">
+							<tr>
+								<td>No. Kartu</td>
+								<td>: <?php echo $vpasien->nomorkartu; ?></td>
+							</tr>
+					  	
+							<tr>
+								<td>Nama Pasien</td>
+								<td>: <?php echo $vpasien->namapasien; ?></td>
+							</tr>
+							<tr>
+								<td>Tanggal Lahir</td>
+								<td>: <?php echo tgl_indo($vpasien->ttl); ?></td>
+							</tr>
+							<tr>
+								<td>Nama Pasien</td>
+								<td>: <?php echo $vpasien->namapasien; ?></td>
+							</tr>
+							<tr>
+								<td>Umur</td>
+								<td>: <?php echo $vpasien->umur; ?></td>
+								</tr>
+								<tr>
+									<td>Jenis Kelamin</td>
+									<td>: <?php echo $vpasien->kelamin; ?></td>
+					  </tr>
+					  <tr>
+						<td>Alamat</td>
+						<td>: <?php echo $vpasien->alamat; ?></td>
+					  </tr>
+					  <tr>
+						<td>Telepon</td>
+						<td>: <?php echo $vpasien->nohp; ?></td>
+					  </tr>
+					  <tr>
+									  <td>Nama Orang Tua</td>
+									  <td>: <?php echo $vpasien->namaortu; ?></td>
+									  </tr>
+									  <tr>
+										<td>Tanggal Daftar</td>
+										<td>: <?php echo tgl_indo($vpasien->tanggal); ?></td>
+									  </tr>
+									</table>
                 </div><!-- /.col -->
 				<form role="form" action="<?php echo base_url("/admin/simpan_periksa/$vpasien->id_pasien"); ?>" enctype="multipart/form-data" method="post">
-                <div class="col-md-8">
+                <div class="col-md-7">
 					<div class="row">
 					<div class="col-xs-3">
 					<label>Suhu Badan</label>
