@@ -187,7 +187,7 @@ class Admin extends CI_Controller {
 		$data['obat'] = $this->master->obat_periksa();
 		$data['pasien'] = $this->master->view_pasien_jadwal($id_pasien);
 		$data['alergi'] = $this->master->lihat_alergi($id_pasien);
-		$data['dokter'] = $this->master->lihat_data('tbl_dokter', '1', '1');
+		$data['dokter'] = $this->master->lihat_data('tbl_dokter', 'statusdokter', 'Aktif');
 		$data['tindakan'] = $this->master->lihat_data('tbl_tindakan', '1', '1');
 		$data['tindakan2'] = $this->master->lihat_data('tbl_tindakan', '1', '1');
 		$data['bahanhabis'] = $this->master->lihat_data('tbl_bahan_habis_pakai', '1', '1');
@@ -633,7 +633,8 @@ class Admin extends CI_Controller {
 		$data['username'] = $this->session->userdata('username'); 
 		$data['kode'] = $kode;
 		$data['id_pasien'] = $id_pasien; 
-		$data['ruangan'] = $this->master->pilih_ruangan();
+		$data['ruangan'] = $this->master->lihat_data('tbl_ruangan', 'statusruangan', 'Aktif');
+		// $data['ruangan'] = $this->master->pilih_ruangan();
 		$this->load->view('/admin/header', $data);
 		$this->load->view('/admin/pilih_ruangan', $data);
 		$this->load->view('/admin/footer');
