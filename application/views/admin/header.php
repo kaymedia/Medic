@@ -127,12 +127,11 @@
                         <i class="fa fa-bar-chart-o"><span>Master Obat</span> </i> 
 					</a>
                         <ul class="ml-menu">
-              
+                        <li><a href="<?php echo base_url()?>admin/msuplier"><i class="fa fa-folder-open">Suplier Obat</i> </a></li>
                 <li><a href="<?php echo base_url()?>admin/msatuanobat"><i class="fa fa-folder-open">Satuan Obat</i> </a></li>
                 <li><a href="<?php echo base_url()?>admin/mjenisobat"><i class="fa fa-folder-open">Jenis Obat</i> </a></li>
                 <li><a href="<?php echo base_url()?>admin/mobat"><i class="fa fa-folder-open">Obat</i> </a></li>
                 <li><a href="<?php echo base_url()?>admin/mbahanhabispakai"><i class="fa fa-folder-open">Bahan Habis Pakai</i> </a></li>
-                <li><a href="<?php echo base_url()?>admin/msuplier"><i class="fa fa-folder-open">Suplier Obat</i> </a></li>
 				<li><a href="<?php echo base_url()?>admin/bobat"><i class="fa fa-folder-open">Beli Obat</i> </a></li>
 
                         </ul>
