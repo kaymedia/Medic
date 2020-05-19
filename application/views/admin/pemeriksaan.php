@@ -483,8 +483,8 @@ $(document).ready(function(){
                     <div class="col-xs-8">
 					<label>Obat</label>
 					<select name="obat[]" class="form-control" required="">
-					<?php foreach($obat as $vobat){ ?>
-					<option value="<?php echo $vobat->id_obat; ?>"><?php echo $vobat->namaobat; ?></option>
+					<?php foreach($obat as $vobat){?>
+					<option value="<?php echo $vobat->id_obat; ?>"><?php echo $vobat->namaobat; ?> (Kadaluarsa : <?php echo tgl_indo($vobat->kadaluarsa); ?>)</option>
 					<?php } ?>
 					</select>
                     </div>
