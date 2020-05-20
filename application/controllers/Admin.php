@@ -418,6 +418,7 @@ class Admin extends CI_Controller {
 						  'id_obat' => $obat[$i],
 						  'dosis' => $dosis[$i],
 						  'id_dokter' => $id_dokter,
+						  'status' => 'Rawat Inap',
 						  'jumlahobat' => $jumlahobat[$i]);
 						
 
@@ -633,7 +634,7 @@ class Admin extends CI_Controller {
 		$data['username'] = $this->session->userdata('username'); 
 		$data['kode'] = $kode;
 		$data['id_pasien'] = $id_pasien; 
-		$data['ruangan'] = $this->master->lihat_data('tbl_ruangan', 'statusruangan', 'Aktif');
+		$data['ruangan'] = $this->master->lihat_data('tbl_ruangan', 'statusruangan', '1');
 		// $data['ruangan'] = $this->master->pilih_ruangan();
 		$this->load->view('/admin/header', $data);
 		$this->load->view('/admin/pilih_ruangan', $data);
@@ -645,7 +646,7 @@ class Admin extends CI_Controller {
 		}
 		$kodex = $this->session->userdata('kodexperiksa');
 		$ruangan = $this->input->post('ruangan');
-		$dataruangan = array ('statusruangan' => 1);
+		$dataruangan = array ('statusruangan' => 0);
 		$this->master->simpan_data('tbl_ruangan','id_ruangan', $ruangan, $dataruangan);
 		$data = array ('id_ruangan' => $ruangan);
 		$ekz = $this->master->simpan_pilih_ruangan($data, $kode);
