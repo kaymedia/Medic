@@ -450,6 +450,7 @@ $(document).ready(function(){
 				  <div class="col-xs-8">
 					<label>Tindakan</label>
 					<select name="id_tindakan[]" class="form-control" required="">
+					<option disabled selected>Pilih Tindakan</option>
 					<?php foreach($tindakan2 as $tindakan2){ ?>
 					<option value="<?php echo $tindakan2->id_tindakan; ?>"><?php echo $tindakan2->nama_tindakan; ?> - Rp.<?php echo number_format($tindakan2->biaya_tindakan,0,".","."). ''; ?></option>
 					<?php } ?>
@@ -465,6 +466,7 @@ $(document).ready(function(){
 				  <div class="col-xs-8">
 					<label>Bahan Habis Pakai</label>
 					<select name="id_bahan[]" class="form-control" required="">
+					<option disabled selected>Pilih Bahan Habis Pakai</option>
 					<?php foreach($bahanhabis2 as $bahanhabis2){ ?>
 					<option value="<?php echo $bahanhabis2->id_bahan; ?>"><?php echo $bahanhabis2->nama_bahan; ?> - Rp.<?php echo number_format($bahanhabis2->harga_bahan,0,".","."). ''; ?></option>
 					<?php } ?>
@@ -483,6 +485,7 @@ $(document).ready(function(){
                     <div class="col-xs-8">
 					<label>Obat</label>
 					<select name="obat[]" class="form-control" required="">
+					<option disabled selected>Pilih Obat</option>
 					<?php foreach($obat as $vobat){?>
 					<option value="<?php echo $vobat->id_obat; ?>"><?php echo $vobat->namaobat; ?> (Kadaluarsa : <?php echo tgl_indo($vobat->kadaluarsa); ?>)</option>
 					<?php } ?>
@@ -511,6 +514,7 @@ $(document).ready(function(){
 									</div>
 				  <label>Status Pasien</label>
                  <select name="status" class="form-control">
+				 <option disabled selected>Pilih Status Pasien</option>
 					<option value="Rawat Inap">Rawat Inap</option>
 					<option value="Pulang">Pulang</option>
 					<option value="Rawat Jalan">Rawat Jalan</option>
@@ -518,6 +522,7 @@ $(document).ready(function(){
 					<br>
 					<label>Pilih Dokter</label>
                  <select name="id_dokter" class="form-control">
+				 <option disabled selected>Pilih Dokter</option>
 				 <?php foreach ($dokter as $dokter){ ?>
 					<option value="<?php echo $dokter->id_dokter; ?>"><?php echo $dokter->namadokter; ?></option>
 				 <?php } ?>
