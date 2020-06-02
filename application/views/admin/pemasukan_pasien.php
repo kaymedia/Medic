@@ -5,11 +5,19 @@ foreach($ambiltindakan as $ambiltindakan){
     $arraybiaya[] = $ambiltindakan->hitung;
 }
   } ?>
+   <?php foreach($periksabahan as $bahanhabispakai){ 
+     $jumlahbahan = $bahanhabispakai->jml_bahan;
+     $ambilbahan =  $this->master->sum_bahan($bahanhabispakai->id_bahan);
+     foreach($ambilbahan as $ambilbahan){
+         $arraybahan[] = $ambilbahan->hitung*$jumlahbahan;
+     }
+       } ?>
 <?php $no = 1; foreach($periksa3 as $vp1){ 
 											$arrayharga[] = $vp1->jumlahobat*$vp1->hargaobat;
 											$totalbiaya = array_sum($arraybiaya);
 											$totalharga = array_sum($arrayharga);
-$total = $totalbiaya + $totalharga; }
+											$totalbahan = array_sum($arraybahan);
+$total = $totalbiaya + $totalharga + $totalbahan; }
 											?> 
 											           
 
@@ -44,7 +52,7 @@ $total = $totalbiaya + $totalharga; }
 					<div class="form-group">
 					<div class="form-line">
 				  <label>Jumlah</label>
-                 <input type="number" name="jumlah" class="form-control" id="exampleInputEmail1" placeholder="">
+                 <input type="number" name="jumlah" class="form-control" id="exampleInputEmail1" value="<?php echo $total; ?>">
 				 </div>
 				 </div>
 				<div class="modal-footer">

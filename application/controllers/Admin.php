@@ -276,8 +276,9 @@ class Admin extends CI_Controller {
 		$jdiagnosa = sizeof($diagnosa);
 		$jtindakan = sizeof($tindakan);
 		$jkeluhan = sizeof($keluhan);
+		$jbahan = sizeof($id_bahan);
 		$jobat = sizeof($obat);
-		$arraymax = array($jdiagnosa, $jtindakan, $jobat, $jkeluhan);
+		$arraymax = array($jdiagnosa, $jtindakan, $jobat, $jkeluhan, $jbahan);
 		
 		$jumlah = max($arraymax);
 		for( $i = 0; $i < $jumlah; $i++){ 
@@ -526,6 +527,7 @@ class Admin extends CI_Controller {
 		$data['periksa1'] = $this->master->tampil_periksa1($kode);
 		$data['periksa2'] = $this->master->tampil_periksa2($kode);
 		$data['periksa3'] = $this->master->tampil_periksa3($kode);
+		$data['periksabahan'] = $this->master->tampil_periksabahan($kode);
 		$this->load->view('/admin/pemasukan_pasien', $data);
 		$this->load->view('/admin/footer');
 	}

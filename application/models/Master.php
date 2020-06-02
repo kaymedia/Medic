@@ -311,8 +311,16 @@ class Master extends CI_Model{
         $query =$this->db->query("SELECT sum(biaya_tindakan) as hitung from tbl_tindakan where id_tindakan = '$id_tindakan' ");
         return $query->result();
 	} 
+	public function sum_bahan($id_bahan){
+        $query =$this->db->query("SELECT sum(harga_bahan) as hitung from tbl_bahan_habis_pakai where id_bahan = '$id_bahan' ");
+        return $query->result();
+	} 
+	public function tampil_periksabahan($kode){
+        $query =$this->db->query("SELECT * FROM `tbl_pemeriksaan`, tbl_bahan_habis_pakai where kode = '$kode' and tbl_bahan_habis_pakai.id_bahan = tbl_pemeriksaan.id_bahan ");
+        return $query->result();
+	}
 	public function tampil_periksa1($kode){
-        $query =$this->db->query("SELECT tbl_pemeriksaan.diagnosa, tbl_pemeriksaan.keluhan, tbl_pemeriksaan.tanggal,tbl_pemeriksaan.id_tindakan, tbl_pemeriksaan.biaya, tbl_pemeriksaan.dosis, tbl_pemeriksaan.tinggi, tbl_pemeriksaan.berat, tbl_pemeriksaan.tekanandarah, tbl_pemeriksaan.suhu, tbl_pemeriksaan.kode, tbl_pemeriksaan.id_pemeriksaan, tbl_tindakan.id_tindakan, tbl_tindakan.nama_tindakan, tbl_tindakan.biaya_tindakan FROM `tbl_pemeriksaan`, tbl_tindakan where kode = '$kode' and tbl_pemeriksaan.id_tindakan = tbl_tindakan.id_tindakan ");
+        $query =$this->db->query("SELECT tbl_pemeriksaan.diagnosa, tbl_pemeriksaan.keluhan, tbl_pemeriksaan.tanggal,tbl_pemeriksaan.id_tindakan, tbl_pemeriksaan.biaya, tbl_pemeriksaan.dosis, tbl_pemeriksaan.tinggi, tbl_pemeriksaan.berat, tbl_pemeriksaan.tekanandarah, tbl_pemeriksaan.suhu, tbl_pemeriksaan.kode, tbl_pemeriksaan.id_pemeriksaan, tbl_tindakan.id_tindakan, tbl_tindakan.nama_tindakan, tbl_tindakan.biaya_tindakan, tbl_bahan_habis_pakai.id_bahan, tbl_bahan_habis_pakai.harga_bahan, tbl_pemeriksaan.jml_bahan FROM `tbl_pemeriksaan`, tbl_tindakan, tbl_bahan_habis_pakai where kode = '$kode' and tbl_pemeriksaan.id_tindakan = tbl_tindakan.id_tindakan and tbl_bahan_habis_pakai.id_bahan = tbl_pemeriksaan.id_bahan ");
         return $query->result();
 	}
 	public function tampil_periksa2($kode){
