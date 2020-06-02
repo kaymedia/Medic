@@ -509,7 +509,7 @@ class Admin extends CI_Controller {
 		  }
 		  else{
 			  $kodex = $this->session->userdata('kodexperiksa');
-		  redirect(base_url("/admin/pemasukan_pasien_pulang/$kode/$id_pasien"));
+		  redirect(base_url("/admin/pemasukan_pasien/$kode/$id_pasien"));
 		  }
 		
 	}

@@ -147,11 +147,7 @@
 									     
 										
 									<?php $no++; } ?>
-									 <tr>
-                                            <td>Total Biaya Pemeriksaan</td>
-                                            
-                                            <td>Rp.<?php echo number_format($total,0,".","."). ''; ?></td> 
-										 </tr>
+									 
                                     </tbody>
                                 </table>
                                 <p align="right"> <?php echo tgl_indo(date('20y-m-d')); ?></p>
